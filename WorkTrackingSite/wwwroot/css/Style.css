@@ -1,0 +1,220 @@
+﻿.RegularFontStyle{
+    color: white;
+}
+
+.Headline {
+    font-weight: lighter;
+    color: white;
+}
+
+.BodyStyle {
+    background-color: #1d1d1d;
+    background-size: 100%;
+    background-attachment: fixed;
+}
+
+.CategoriesImgSize{
+    width: 100px;
+    height: 50px;
+}
+
+header{
+    margin: 0 auto;
+    padding-top:50px;
+    padding-bottom:0;
+}
+
+.HeaderDiv {
+    position: fixed;
+    top: 0;
+    background: #1d1d1d;
+    width: 100%;
+}
+
+.li-lists{
+    text-align: left;
+    margin-left: 40px;
+    color: goldenrod;
+}
+
+p{
+    margin-left: 45px;
+    margin-right: 45px;
+}
+
+.Container {
+    margin: 0 auto;
+    padding-bottom: 15px;
+}
+
+.DivRow {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.MainDiv {
+    margin: 0 auto;
+    text-align: center;
+    height: 100%;
+    max-width: 90em;
+    min-width: 40em;
+    background: rgba(29, 29, 29, .9);
+}
+
+nav ul {
+    display: inline-flex;
+    list-style: none;
+    margin: 0 auto;
+}
+
+nav li {
+    list-style: none;
+    margin-right: 5px;
+}
+
+.change-li {
+    text-align: left;
+    color: white;
+}
+
+a{
+    color: goldenrod;
+}
+
+nav a {
+    display: inline;
+    text-decoration: none;
+    font-weight: lighter;
+    padding: 5px;
+    border: 3px solid white;
+    border-radius: 5px;
+    color: white;
+}
+
+.nav-input {
+    position: absolute;
+    left: 260px;
+    top: 13px;
+    font-weight: lighter;
+    width: 70px;
+    height: 33.3px;
+    font-size: 17px;
+    text-align: center;
+    padding: 5px;
+    border: 3px solid white;
+    border-radius: 5px;
+    color: white;
+}
+
+.links {
+    text-decoration: none;
+    font-weight: lighter;
+    padding: 5px;
+    border: 3px solid white;
+    border-radius: 5px;
+    color: white;
+}
+
+.form-div {
+    margin-top: 10px;
+}
+
+td {
+    font-weight: lighter;
+    padding: 15px;
+    border: 1px solid white;
+    color: white;
+}
+
+.image {
+    max-height: 300px;
+    max-width: 200px;
+}
+
+.textarea {
+    font-size: 15px;
+    background: rgba(29, 29, 29, .9);
+    color: white;
+    border: 3px solid white;
+    border-radius: 5px;
+    max-height: 200px;
+    min-height: 100px;
+    min-width: 70%;
+    max-width: 90%;
+}
+
+input {
+    height: 20px;
+    width: 250px;
+    background: rgba(29, 29, 29, .9);
+    color: white;
+    border: 3px solid white;
+    border-radius: 5px;
+}
+
+.button {
+    height: 30px;
+    width: 100px;
+    font-size: 18px;
+    background: rgba(29, 29, 29, .9);
+    color: white;
+    border: 3px solid white;
+    border-radius: 5px;
+}
+
+.red-clr {
+    color: red; /* Цвет текста */
+}
+
+.light-red-clr {
+    color: lightsalmon; /* Цвет текста */
+}
+
+.yellow-clr {
+    color: yellow; /* Цвет текста */
+}
+
+.blue-clr {
+    color: lightblue; /* Цвет текста */
+}
+
+.green-clr {
+    color: green; /* Цвет текста */
+}
+
+.widget {
+    position: fixed;
+}
+
+.widget-title {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-bottom: 15px;
+}
+
+.widget-list {
+    padding-left: 0px;
+    font-size: 15px;
+    list-style: none;
+}
+
+    .widget-list a:before {        
+        margin-right: 14px;
+    }
+
+    .widget-list a {
+        text-decoration: none;
+        outline: none;
+        display: block;
+        padding: 6px 0;
+        letter-spacing: 1px;
+        font-weight: 250;
+        color: #FFFFFF;
+        transition: .3s linear;
+    }
+
+        .widget-list a:hover {
+            color: #b99d61;
+        }

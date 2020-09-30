@@ -1,0 +1,66 @@
+﻿<Window
+    x:Class="NewWorkTracking.Windows.ChangeServerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="clr-namespace:NewWorkTracking.Windows"
+    xmlns:vm="clr-namespace:NewWorkTracking.ViewModels"
+    mc:Ignorable="d"
+    Background="#1d1d1d"
+    BorderBrush="#FFFFFF"
+    BorderThickness="1"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    Title="ChangeServerWindow"
+    Name="ChangeServer"
+    Height="200"
+    Width="400"
+    ResizeMode="NoResize"
+    SizeToContent="Height"
+    IsEnabled="{Binding ControlEnable}">
+
+    <Window.DataContext>
+        <vm:ChangeServerViewModel />
+    </Window.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="152*" />
+            <RowDefinition
+                Height="30*" />
+            <RowDefinition
+                Height="237*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center"
+            Margin="20"
+            Text="{Binding Description}"
+            TextWrapping="Wrap"/>
+
+        <TextBox
+            Grid.Row="1"
+            Margin="100,0,100,0"
+            Text="{Binding NewServer}"/>
+
+        <DockPanel
+            Margin="20"
+            Grid.Row="2"
+            HorizontalAlignment="Center">
+            
+            <Button
+                Margin="5"
+                Content="Применить"
+                Command="{Binding ChangeServer}"/>
+
+            <Button
+                Margin="5"
+                Content="Закрыть"
+                Command="{Binding CloseChsngeServer}"/>
+        </DockPanel>
+
+    </Grid>
+</Window>
