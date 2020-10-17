@@ -172,50 +172,17 @@ namespace NewWorkTracking.Models
         {
             if (obj is NewWrite temp)
             {
-                if(temp.OspOrder.ToLower().Contains(SearchLine.ToLower()))
+                bool result = false;
+
+                foreach (var p in temp.GetType().GetProperties())
                 {
-                    return true;
+                    if (p.GetValue(temp) != null && p.GetValue(temp).ToString().ToLower().Contains(SearchLine.ToLower()))
+                    {
+                        result = true;
+                    }
                 }
-                else if(temp.Who.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if(temp.OspWork.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if(temp.OsType.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if(temp.OrderType.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if(temp.Why.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if(temp.Results.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.OldInv.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.NewInv.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.OldPCName.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+                return result;
             }
             else
             {

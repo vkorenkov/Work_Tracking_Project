@@ -159,86 +159,17 @@ namespace NewWorkTracking.Models
         {
             if (obj is RepairClass temp)
             {
-                if (temp.Status.ToLower().Contains(SearchLine.ToLower()))
+                bool result = false;
+
+                foreach (var p in temp.GetType().GetProperties())
                 {
-                    return true;
+                    if (p.GetValue(temp) != null && p.GetValue(temp).ToString().ToLower().Contains(SearchLine.ToLower()))
+                    {
+                        result = true;
+                    }
                 }
-                else if (temp.OsName.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.Model.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.SNumber.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.InvNumber.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.DiagNumber.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.ScOks.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.KaProvider.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.KaRepair.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.HandedOver.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.Defect.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.ProviderOrder.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.RepairBill.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.WarrantyBasis.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.Warranty.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.DaysOfRepair.ToString().ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.ReturnFromRepair.ToString().ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.ShipmentDate.ToString().ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.Date.ToString().ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+                return result;
             }
             else
             {
