@@ -1,67 +1,115 @@
-﻿@{Layout = "MenuLayout"; }
+﻿<!DOCTYPE html>
+<html lang="ru">
 
-<html lang="ru-RU">
 <head>
-    <meta charset="utf-8">
-    <title>Главная Work Tracking</title>
-    <link href="~/css/Style.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница Work Tracking</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/lightbox.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/headerMenu.js"></script>
+    <script src="/js/lightbox-plus-jquery.min.js"></script>
 </head>
-<body class="BodyStyle">
 
-    <header>
-        <div class="DivRow">
-            <h1 class="Headline">Описание и инструкция программы Work Tracking</h1>
-        </div>
-    </header>
-    <div class="MainDiv">
-        <div class="DivRow">
-            <h2 class="Headline">Work tracking - это средство мониторинга выполненных работ и статуса устройств поступивших для ремонта или иных работ.</h2>
-            <p class="RegularFontStyle">
-                Далее на странице будет представлена краткая инструкция по работе с программой Work tracking.
-            </p>
-
-            <main>
-                <h2 class="Headline">Краткий обзор интерфейса:</h2>
-
-                <img src="~/img/InterfaceOverview.gif" />
-
-                <h2 class="Headline">Вкладка "Мои работы"</h2>
-
-                <p class="RegularFontStyle">
-                    Добавление новой работы:
+<body class="body">
+    <main class="main">
+        <section class="section-description">
+            <div class="container">
+                <div class="description-content">
+                    <h1 class="main-heading">
+                        Описание программы Work Tracking
+                    </h1>
+                    <h3 class="lowheading lowheading-description">
+                        Work tracking - это средство мониторинга выполненных работ и статуса устройств поступивших в
+                        отдел компьютерного сервиса для ремонта или иных работ.
+                    </h3>
+                </div>
+            </div>
+        </section>
+        <section class="section-manual">
+            <div class="container">
+                <p class="section-description-text">
+                    Далее на странице будет представлена краткая инструкция по работе с программой Work tracking.
                 </p>
-                <img src="~/img/MyOrders.gif" />
-
-                <h2 class="Headline">Вкладка "Все работы"</h2>
-
-                <p class="RegularFontStyle">
-                    Изменение работы:
-                </p>
-                <img src="~/img/AllOrders.gif" />
-
-                <h2 class="Headline">Вкладка "Все ремонты"</h2>
-
-                <p class="RegularFontStyle">
-                    Изменение ремонта:
-                </p>
-                <img src="~/img/AllRepairs.gif" />
-
-                <h2 class="Headline">Вкладка "Устройства"</h2>
-
-                <p class="RegularFontStyle">
-                    добавление и изменение устройства, добавление и изменение ремонта устройства:
-                </p>
-                <img src="~/img/Devices&Repairs.gif" />
-
-                <h2 class="Headline">Вкладка "Администрирование"</h2>
-
-                <p class="RegularFontStyle">
-                    Добавление, изменение и удаление объектов:
-                </p>
-                <img src="~/img/Administrate.gif" />
-            </main>
-        </div>
-    </div>
+                <div class="manual-content">
+                    <div class="manual-flex">
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Краткий обзор интерфейса:
+                            </h2>
+                            <a href="/img/MainManual/InterfaceOverview.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/InterfaceOverview.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img manual-padding-img-first">
+                            </a>
+                        </div>
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Вкладка "Мои работы"
+                            </h2>
+                            <h3 class="lowheading">
+                                Добавление новой работы:
+                            </h3>
+                            <a href="/img/MainManual/MyOrders.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/MyOrders.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img">
+                            </a>
+                        </div>
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Вкладка "Все работы"
+                            </h2>
+                            <h3 class="lowheading">
+                                Изменение работы:
+                            </h3>
+                            <a href="/img/MainManual/AllOrders.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/AllOrders.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img">
+                            </a>
+                        </div>
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Вкладка "Все ремонты"
+                            </h2>
+                            <h3 class="lowheading">
+                                Изменение ремонта:
+                            </h3>
+                            <a href="/img/MainManual/AllRepairs.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/AllRepairs.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img">
+                            </a>
+                        </div>
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Вкладка "Устройства"
+                            </h2>
+                            <h3 class="lowheading">
+                                добавление и изменение устройства, добавление и изменение ремонта устройства:
+                            </h3>
+                            <a href="/img/MainManual/Devices&Repairs.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/Devices&Repairs.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img">
+                            </a>
+                        </div>
+                        <div class="manual-block">
+                            <h2 class="manual-heading">
+                                Вкладка "Администрирование"
+                            </h2>
+                            <h3 class="lowheading">
+                                Добавление, изменение и удаление объектов:
+                            </h3>
+                            <a href="/img/MainManual/Administrate.gif" data-lightbox="roadtrip">
+                                <img src="/img/MainManual/Administrate.gif" alt="краткий обзор интерфейса"
+                                     class="manual-img manual-padding-last">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+    </footer>
 </body>
 
 </html>

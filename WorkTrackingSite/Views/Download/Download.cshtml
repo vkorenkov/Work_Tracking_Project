@@ -1,41 +1,97 @@
-﻿@{Layout = "MenuLayout"; }
+﻿<!DOCTYPE html>
+<html lang="ru">
 
-<html lang="ru-RU">
 <head>
-    <meta charset="utf-8">
-    <title>Главная Work Tracking</title>
-    <link href="~/css/Style.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница загрузки Work Tracking</title>
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/headerMenu.js"></script>
 </head>
-<body class="BodyStyle">
 
-    <header>
-        <div class="DivRow">
-            <h1 class="Headline">На этой странице вы можете скачать актуальную версию программы Work tracking</h1>
+<body class="body">
+    <main>
+        <section class="section-description">
+            <h1 class="main-heading lowheading-details">
+                На этой странице вы можете скачать актуальную версию программы Work tracking
+            </h1>
+        </section>
+        <div class="container">
+            <section class="section-changed">
+                <h2>
+                    Изменения в версии 2.0.6.8:
+                </h2>
+                <ul>
+                    <li>
+                        Исправление ошибок.
+                    </li>
+                </ul>
+                <p class="RegularFontStyle">
+                    <a href="/CurrentVersion/2.0.6.8/WorkTracking.zip">Скачать Work Tracking 2.0.6.8</a>
+                </p>
+                <h2>
+                    Изменения в версии 2.0.6.7:
+                </h2>
+                <ul>
+                    <li>
+                        Добавлена функция переноса ремонта из одного устройства в другое.
+                    </li>
+                </ul>
+                <p class="RegularFontStyle">
+                    <a href="/CurrentVersion/2.0.6.7/WorkTracking.zip">Скачать Work Tracking 2.0.6.7</a>
+                </p>
+                <h2>
+                    Изменения в версии 2.0.6.6:
+                </h2>
+                <ul>
+                    <li>
+                        Добавлен перенос слов в ячейках таблиц.
+                    </li>
+                    <li>
+                        Устранены некоторые баги.
+                    </li>
+                </ul>
+                <p class="RegularFontStyle">
+                    <a href="/CurrentVersion/2.0.6.6/WorkTracking.zip">Скачать Work Tracking 2.0.6.6</a>
+                </p>
+                <h2>
+                    Изменения в версии 2.0.6.5:
+                </h2>
+                <ul>
+                    <li>
+                        Переработан интерфейс.
+                    </li>
+                    <li>
+                        Значительно сокращенно количество дополнительных окон.
+                    </li>
+                    <li>
+                        Вкладки сверху заменены на кнопки в боковом меню.
+                    </li>
+                    <li>
+                        Проверка вводимых данных (В поле "номер заявки" невозможно ввести буквы, в поле "Инвентарный номер неисправного устройства" и "нвентарный номер нового устройства" ограничен минимум 10 и максимум 12 символами).
+                    </li>
+                    <li>
+                        Теперь запись работы производиться только от имени пользователя авторизованного в системе. Нет возможности выбрать пользователя, от имени которого будет записываться работа.
+                    </li>
+                    <li>
+                        Добавлены разделители, которые позволяют изменять размеры некоторых элементов интерфейса (См. "краткий обзор интерфейса" на главной странице). Переписана функциональная часть.
+                    </li>
+                    <li>
+                        Устранены некоторые неисправности в работе программы.
+                    </li>
+                    <li>
+                        Добавлена функция считывания файла Excel для добавления ремонтов (Файл excel должен быть правильно отформатирован).
+                    </li>
+                </ul>
+                <p>
+                    <a href="/CurrentVersion/2.0.6.5/WorkTracking.zip">Скачать Work Tracking 2.0.6.5</a>
+                </p>
+            </section>
         </div>
-    </header>
-    <div class="MainDiv">
-        <div class="DivRow">
-            <main>
-                <div>
-                    <h3 class="Headline">Изменения в версии 2.0.6.4:</h3>
-                    <ul>
-                        <li class="change-li">Переработан интерфейс</li>
-                        <li class="change-li">Значительно сокращенно количество дополнительных окон.</li>
-                        <li class="change-li">Вкладки сверху заменены на кнопки в боковом меню</li>
-                        <li class="change-li">Проверка вводимых данных (В поле "номер заявки" невозможно ввести буквы, в поле "Инвентарный номер неисправного устройства" и "нвентарный номер нового устройства" ограничен минимум 10 и максимум 12 символами).</li>
-                        <li class="change-li">Теперь запись работы производиться только от имени пользователя авторизованного в системе. Нет возможности выбрать пользователя, от имени которого будет записываться работа.</li>
-                        <li class="change-li">Добавлены разделители, которые позволяют изменять размеры некоторых элементов интерфейса. (<a href="/Index/Index">См. "краткий обзор интерфейса" на главной странице</a>)</li>
-                        <li class="change-li">Переписана функциональная часть.</li>
-                        <li class="change-li">Устранены некоторые неисправности в работе программы.</li>
-                        <li class="change-li">Добавлена функция считывания файла Excel для добавления ремонтов (Файл excel должен быть правильно отформатирован)</li>
-                    </ul>
-                    <p class="RegularFontStyle">
-                        <a href="~/CurrentVersion/WorkTracking.zip">Скачать тестовую версию Work Tracking 2.0.6.4</a>
-                    </p>
-                </div>
-            </main>
-        </div>
-    </div>
+    </main>
+    <footer class="footer">
+    </footer>
 </body>
 
 </html>
