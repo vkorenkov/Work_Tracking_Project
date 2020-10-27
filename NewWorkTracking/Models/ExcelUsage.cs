@@ -131,7 +131,7 @@ namespace NewWorkTracking.Models
                                     RepairBill = t.Cell(16).Value.ToString(),
                                     WarrantyBasis = t.Cell(17).Value.ToString(),
                                     StartWarranty = t.Cell(18).Value.GetType() != typeof(DateTime) ? new DateTime?() : Convert.ToDateTime(t.Cell(18).Value),
-                                    Warranty = t.Cell(18).Value.ToString()
+                                    Warranty = t.Cell(19).Value.ToString()
                                 };
 
                                 emptyCol.Add(repairClass);

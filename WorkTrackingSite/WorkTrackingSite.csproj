@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\CurrentVersion\2.0.6.6\" />
     <Folder Include="wwwroot\img\" />
-    <Folder Include="wwwroot\CurrentVersion\" />
     <Folder Include="wwwroot\Update\" />
     <Folder Include="wwwroot\ExcelExample\" />
   </ItemGroup>

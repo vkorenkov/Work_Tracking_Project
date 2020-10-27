@@ -22,7 +22,7 @@ namespace ProgramInfoSerializer
 
             var tempString = JsonConvert.SerializeObject(programInfo);
 
-            File.WriteAllText(@"C:\serverInfo.json", tempString);
+            File.WriteAllText(@"D:\version.json", tempString);
 
             Console.ReadKey();
         }

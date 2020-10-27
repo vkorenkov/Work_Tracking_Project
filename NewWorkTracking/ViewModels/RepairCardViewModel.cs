@@ -18,15 +18,9 @@ namespace NewWorkTracking.ViewModels
 
         public MainObject MainObject { get; set; }
 
-        public ICommand AddNewRepair => new RelayCommand<object>(obj =>
-        {
-            ConnectionClass.hubConnection.InvokeAsync("RunAddRepair", Repair);
-        });
+        public ICommand AddNewRepair => new RelayCommand<object>(obj => ConnectionClass.hubConnection.InvokeAsync("RunAddRepair", Repair));
 
-        public ICommand CloseCard => new RelayCommand<object>(obj =>
-        {
-            Application.Current.Windows.CloseWindow("RepairCardWindow");
-        });
+        public ICommand CloseCard => new RelayCommand<object>(obj => Application.Current.Windows.CloseWindow("RepairCardWindow"));
 
         public RepairCardViewModel(MainObject mainObject)
         {

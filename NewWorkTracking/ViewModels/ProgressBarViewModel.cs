@@ -263,7 +263,7 @@ namespace NewWorkTracking.ViewModels
             {
                 if (Directory.Exists("Resources"))
                 {
-                    ConnectionPathInfo connectionPath = new ConnectionPathInfo() { Server = "#", UpdateServer = "localhost" };
+                    ConnectionPathInfo connectionPath = new ConnectionPathInfo() { Server = "#", UpdateServer = "" };
 
                     File.WriteAllText(@"Resources/serverInfo.json", JsonConvert.SerializeObject(connectionPath));
 

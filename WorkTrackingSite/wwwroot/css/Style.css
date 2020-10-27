@@ -22,6 +22,10 @@ a{
     color: goldenrod;
 }
 
+a:active {
+    color: goldenrod;
+}
+
 p{
     color: white;
 }
@@ -58,7 +62,11 @@ ol{
     width: 50px;
 }
 
-.header{
+.header {
+    display: flex;
+    padding-left: 200px;
+    padding-right: 200px;
+    align-items: center;
     border-bottom: 2px solid darkgray;
     height: 70px;
 }
@@ -66,15 +74,21 @@ ol{
 .header-container{
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 100%;
 }
 
 .nav-list{
     display: flex;
+    margin-right: auto;
     list-style: none;
 }
 
-.nav-item:not(:last-child){
+.nav-item.is-active a{
+    border: 2px solid goldenrod;
+}
+
+.nav-item:not(:last-child) {
     margin-right: 20px;
 }
 
@@ -86,9 +100,9 @@ ol{
     text-decoration: none;
 }
 
-.section-description{
-    background: url('../img/hero/hero.jpg');
-    background-size: 100%;
+.section-description {
+    background: url('../img/hero/hero2.png');
+    background-size: 30%;
     height: 250px;
 }
 

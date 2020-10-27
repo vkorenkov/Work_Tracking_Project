@@ -43,22 +43,17 @@ namespace NewWorkTracking.Models
         {
             if (obj is Devices temp)
             {
-                if (temp.OsName.ToLower().Contains(SearchLine.ToLower()))
+                bool result = false;
+
+                foreach (var p in temp.GetType().GetProperties())
                 {
-                    return true;
+                    if (p.GetValue(temp) != null && p.GetValue(temp).ToString().ToLower().Contains(SearchLine.ToLower()))
+                    {
+                        result = true;
+                    }
                 }
-                else if (temp.DeviceName.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else if (temp.InvNumber.ToLower().Contains(SearchLine.ToLower()))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+
+                return result;
             }
             else
             {

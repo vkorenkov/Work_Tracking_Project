@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using WorkTracking_Server.Context;
 using WorkTracking_Server.Extentions;
+using WorkTracking_Server.Models;
 using System.Text.Json;
 using Newtonsoft.Json;
 using WorkTracking_Server.Sql;
@@ -34,7 +35,7 @@ namespace WorkTracking_Server.Hubs
         /// <returns></returns>
         public async Task TestConnection()
         {
-            await Clients.Caller.SendAsync("TestConnection", true);
+            await Clients.All.SendAsync("TestConnection", true);
         }
 
         public async Task RunAddNewWork(NewWrite newWork)
@@ -92,7 +93,7 @@ namespace WorkTracking_Server.Hubs
 
                     if (tempBoolRepair)
                     {
-                        device.Repairs = new List<RepairClass>(dataContext.Repairs.Where(x => x.InvNumber == device.InvNumber).ToList());
+                        device.Repairs = new ObservableCollection<RepairClass>(dataContext.Repairs.Where(x => x.InvNumber == device.InvNumber).ToList());
 
                         await Clients.All.SendAsync("UpdateRepairs", repair);
 
@@ -166,6 +167,17 @@ namespace WorkTracking_Server.Hubs
 
             if (accessModel != null)
             {
+                #region _
+                //if (checkClass.CheckAccess(accessModel) == 0)
+                //{
+                //    await RunGetOneUser(accessModel);
+                //}
+                //else
+                //{
+                //    await RunGetAll(accessModel);
+                //}
+                #endregion
+
                 accessModel.ChangeVisibility();
 
                 await RunGetAll(accessModel);
@@ -262,5 +274,17 @@ namespace WorkTracking_Server.Hubs
 
             await UpdateItems(result.Result);
         }
+
+        public async Task StartGetUsers()
+        {
+            await Clients.Caller.SendAsync("GiveUsers", fromSql.GetComboboxes());
+        }
+
+        #region _
+        //public async Task RunGetOneUser(AccessModel accessModel)
+        //{
+        //    await Clients.Caller.SendAsync("GiveOneUser", new MainObject(accessModel, fromSql.GetWorks(accessModel.Name), fromSql.GetDevices(), fromSql.GetRepairs(), fromSql.GetComboboxes()));
+        //}
+        #endregion
     }
 }

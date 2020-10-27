@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -70,6 +71,10 @@ namespace NewWorkTracking.ViewModels
             set { administrateViewModel = value; OnPropertyChanged(nameof(AdministrateViewModel)); }
         }
 
+        private string previewTab;
+
+        private string currentTab;
+
         private string connectStatus;
         /// <summary>
         /// Свойство представления статуса подключения к серверу
@@ -95,7 +100,7 @@ namespace NewWorkTracking.ViewModels
         /// </summary>
         public ICommand ViewModelsVisibility => new RelayCommand<object>(obj =>
         {
-            SwitchTab(obj);           
+            SwitchTab(obj.ToString());      
         });
 
         /// <summary>
@@ -103,17 +108,7 @@ namespace NewWorkTracking.ViewModels
         /// </summary>
         public ICommand Back => new RelayCommand<object>(obj =>
         {
-            if (AllWorksViewModel.Actively == typeof(WorkCardDataContext).ToString())
-            {
-                AllWorksViewModel.Actively = string.Empty;
-                AllWorksViewModel.ActiveVisibility = Visibility.Visible;
-            }
-            if(RepairsViewModel.Actively == typeof(RepairCardDataContext).ToString())
-            {
-                RepairsViewModel.Actively = string.Empty;
-                RepairsViewModel.RepairContext.RepairCardVis = Visibility.Collapsed;
-                RepairsViewModel.ActiveVisibility = Visibility.Visible;
-            }
+            SwitchTab(previewTab);
         });
 
         /// <summary>
@@ -177,7 +172,7 @@ namespace NewWorkTracking.ViewModels
                             break;
                     }
 
-                    SwitchTab("UserWorks");
+                    SwitchTab("User");
 
                     Application.Current.Dispatcher.Invoke(() => Message.Show("Внимание", $"Ваш уровень доступа изменился на {tempAccessDesc}", MessageBoxButton.OK));
                 }
@@ -220,45 +215,28 @@ namespace NewWorkTracking.ViewModels
         /// Метод изменения отображения вкладок
         /// </summary>
         /// <param name="obj"></param>
-        private void SwitchTab(object obj)
+        private void SwitchTab(string tabName)
         {
-            switch (obj)
+            List<AbstractViewModel> viewModels = new List<AbstractViewModel>() { UserWorksViewModel, AllWorksViewModel, RepairsViewModel, DevicesViewModel, AdministrateViewModel };
+
+            PreviewTab(viewModels);
+
+            foreach (var v in viewModels)
             {
-                case "UserWorks":
-                    UserWorksViewModel.ActiveVisibility = Visibility.Visible;
-                    AllWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    RepairsViewModel.ActiveVisibility = Visibility.Collapsed;
-                    DevicesViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AdministrateViewModel.ActiveVisibility = Visibility.Collapsed;
-                    break;
-                case "AllWorks":
-                    AllWorksViewModel.ActiveVisibility = Visibility.Visible;
-                    RepairsViewModel.ActiveVisibility = Visibility.Collapsed;
-                    UserWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    DevicesViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AdministrateViewModel.ActiveVisibility = Visibility.Collapsed;
-                    break;
-                case "AllRepairs":
-                    RepairsViewModel.ActiveVisibility = Visibility.Visible;
-                    AllWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    UserWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    DevicesViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AdministrateViewModel.ActiveVisibility = Visibility.Collapsed;
-                    break;
-                case "AllDevices":
-                    DevicesViewModel.ActiveVisibility = Visibility.Visible;
-                    UserWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AllWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    RepairsViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AdministrateViewModel.ActiveVisibility = Visibility.Collapsed;
-                    break;
-                case "Administrate":
-                    AdministrateViewModel.ActiveVisibility = Visibility.Visible;
-                    DevicesViewModel.ActiveVisibility = Visibility.Collapsed;
-                    UserWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    AllWorksViewModel.ActiveVisibility = Visibility.Collapsed;
-                    RepairsViewModel.ActiveVisibility = Visibility.Collapsed;
-                    break;
+                v.ActiveVisibility = v.GetType().FullName.Contains(tabName) ? Visibility.Visible : Visibility.Collapsed;
+
+                currentTab = v.GetType().FullName;
+            }
+        }
+
+        private void PreviewTab(List<AbstractViewModel> viewModels)
+        {
+            foreach (var v in viewModels)
+            {
+                if (v.ActiveVisibility == Visibility.Visible)
+                {
+                    previewTab = v.GetType().FullName;
+                }
             }
         }
     }

@@ -973,13 +973,72 @@
         TargetType="{x:Type TextBlock}">
         <Setter
             Property="TextWrapping"
-            Value="NoWrap" />
+            Value="Wrap" />
         <Setter
             Property="TextTrimming"
-            Value="None" />
+            Value="WordEllipsis" />
         <Setter
             Property="Foreground"
             Value="White" />
+    </Style>
+    <!--#endregion TextBlock-->
+
+    <!--#region TextBlock-->
+    <Style
+        TargetType="{x:Type TextBlock}"
+        x:Key="Wrap">
+        <Setter
+            Property="TextWrapping"
+            Value="Wrap" />
+        <Setter
+            Property="TextTrimming"
+            Value="WordEllipsis" />
+        <!--<Style.Triggers>
+            <DataTrigger
+                Binding="{Binding NoActive}"
+                Value="Активно">
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource WhiteBrush}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding NoActive}"
+                Value="Архив">
+                <Setter
+                    Property="Foreground"
+                    Value="Red" />
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBrush}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding NoActive}"
+                Value="Необходимо заполнить номер списания">
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource OrangeBrush}" />
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBrush}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding NoActive}"
+                Value="Списано">
+                <Setter
+                    Property="Foreground"
+                    Value="{StaticResource LightBlue}" />
+                <Setter
+                    Property="Background"
+                    Value="{StaticResource DarkBrush}" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding NoActive}"
+                Value="Модернизировано">
+                <Setter
+                    Property="Foreground"
+                    Value="Green" />
+            </DataTrigger>
+        </Style.Triggers>-->
     </Style>
     <!--#endregion TextBlock-->
 
@@ -1031,6 +1090,9 @@
         <Setter
             Property="Stylus.IsFlicksEnabled"
             Value="False" />
+        <Setter
+            Property="TextWrapping"
+            Value="Wrap" />
         <Setter
             Property="Template">
             <Setter.Value>
@@ -2537,10 +2599,10 @@
             Value="Center" />
         <Setter
             Property="TextBlock.TextAlignment"
-            Value="Center" />
+            Value="Left" />
         <Setter
             Property="TextBlock.VerticalAlignment"
-            Value="Center" />
+            Value="Top" />
         <Setter
             Property="TextBlock.TextWrapping"
             Value="Wrap" />

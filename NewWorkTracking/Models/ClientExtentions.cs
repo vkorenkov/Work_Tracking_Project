@@ -13,55 +13,67 @@ namespace NewWorkTracking.Models
 {
     static class ClientExtentions
     {
+        static HubConnection hubConnection;
+
         /// <summary>
         /// (Расширение) Метод записывает данные по новому серверу в файл адреса сервера
         /// </summary>
         /// <param name="newServer"></param>
         public async static Task<bool> WriteNewServer(this string newServer)
         {
-            HubConnection hubConnection = null;
+            hubConnection = CreateTempConnectionString(newServer);
 
+            if (hubConnection != null)
+            {
+                // Проверка соединения с новым сервером
+                if (await hubConnection.CheckNewServer())
+                {
+                    try
+                    {
+                        // Десериализация json файла подключения
+                        var tempReadedFile = JsonConvert.DeserializeObject<ConnectionPathInfo>(File.ReadAllText(@"Resources/serverInfo.json"));
+
+                        // Временная переменная объекта подключения
+                        tempReadedFile.Server = newServer;
+
+                        // Запись временного объекта в файл Json
+                        File.WriteAllText(@"Resources/serverInfo.json", JsonConvert.SerializeObject(tempReadedFile));
+
+                        // Десериализация актуального файла подключения в основной объект подключения
+                        ConnectionClass.connectionPath = JsonConvert.DeserializeObject<ConnectionPathInfo>(File.ReadAllText(@"Resources/serverInfo.json"));
+
+                        await hubConnection.DisposeAsync();
+
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
+
+                        return false;
+                    }
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
+
+        }
+
+        private static HubConnection CreateTempConnectionString(string newServer)
+        {
             try
             {
                 // Создание тестовой строки подключения
-                hubConnection = new HubConnectionBuilder().WithUrl($"http://{newServer = newServer.Replace(",", ".")}:5010/TrackingServer").Build();
+                return hubConnection = new HubConnectionBuilder().WithUrl($"http://{newServer = newServer.Replace(",", ".")}:5010/TrackingServer").Build();
             }
-            catch
+            catch (Exception ex)
             {
-                return false;
+                Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
+
+                return null;
             }
-
-            // Проверка соединения с новым сервером
-            if (await hubConnection.CheckNewServer())
-            {
-                try
-                {
-                    // Десериализация json файла подключения
-                    var tempReadedFile = JsonConvert.DeserializeObject<ConnectionPathInfo>(File.ReadAllText(@"Resources/serverInfo.json"));
-
-                    // Временная переменная объекта подключения
-                    tempReadedFile.Server = newServer;
-
-                    // Запись временного объекта в файл Json
-                    File.WriteAllText(@"Resources/serverInfo.json", JsonConvert.SerializeObject(tempReadedFile));
-
-                    // Десериализация актуального файла подключения в основной объект подключения
-                    ConnectionClass.connectionPath = JsonConvert.DeserializeObject<ConnectionPathInfo>(File.ReadAllText(@"Resources/serverInfo.json"));
-
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
-
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-
         }
 
         /// <summary>
@@ -115,9 +127,9 @@ namespace NewWorkTracking.Models
         /// <param name="name"></param>
         public static void CloseWindow(this WindowCollection windows, string name)
         {
-            foreach(Window t in windows)
+            foreach (Window t in windows)
             {
-                if(t.Name == name)
+                if (t.Name == name)
                 {
                     t.Close();
                 }

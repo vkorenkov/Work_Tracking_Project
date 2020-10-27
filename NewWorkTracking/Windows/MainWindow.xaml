@@ -40,6 +40,13 @@
     </Window.Resources>
 
     <Grid>
+        <Grid.InputBindings>
+            <KeyBinding
+                Key="B"
+                Modifiers="Ctrl"
+                Command="{Binding Back}" />
+        </Grid.InputBindings>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
@@ -489,7 +496,8 @@
 
                     <TextBlock
                         Text="{Binding MainObject.Access.Name}"
-                        FontFamily="Arial Bold" />
+                        FontFamily="Arial Bold"
+                        Visibility="{Binding Path=NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <TextBlock
                         Text="Осп выполнения работ"
@@ -653,64 +661,77 @@
                     <DataGridTextColumn
                         Header="Системный Администратор"
                         Binding="{Binding Who}"
-                        Width="160" />
+                        Width="160"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="ОСП выполнения"
                         Binding="{Binding OspWork}"
-                        Width="130" />
+                        Width="130"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="ОСП заказчика"
                         Binding="{Binding OspOrder}"
-                        Width="130" />
+                        Width="130"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Вид заявки"
                         Binding="{Binding OrderType}"
-                        Width="90" />
+                        Width="90"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Номер заявки"
                         Binding="{Binding OrderNum}"
-                        Width="90" />
+                        Width="90"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Инвентарный номер снятого"
                         Binding="{Binding OldInv}"
-                        Width="170" />
+                        Width="170"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Инвентарный номер нового"
                         Binding="{Binding NewInv}"
-                        Width="170" />
+                        Width="170"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Старое имя ПК"
-                        Binding="{Binding OldPCName}" />
+                        Binding="{Binding OldPCName}"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Тип ОС"
                         Binding="{Binding OsType}"
-                        Width="120" />
+                        Width="120"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Причина обращения"
                         Binding="{Binding Why}"
-                        Width="120" />
+                        Width="120"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Результат"
-                        Binding="{Binding Results}" />
+                        Binding="{Binding Results}"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Заявленная неиспраность"
                         Binding="{Binding Brocken}"
-                        Width="180" />
+                        Width="180"
+                        ElementStyle="{StaticResource Wrap}" />
 
                     <DataGridTextColumn
                         Header="Выполнение"
-                        Binding="{Binding Pass}" />
+                        Binding="{Binding Pass}"
+                        ElementStyle="{StaticResource Wrap}" />
                 </DataGrid.Columns>
 
             </DataGrid>
@@ -768,11 +789,12 @@
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.Accesses}"
                         Text="{Binding Filter.AdminFilter}"
-                        DisplayMemberPath="Name" />
+                        DisplayMemberPath="Name"
+                        Visibility="{Binding NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <TextBlock
                         Text="Фильтр по типу заявки"
-                        Margin="0 5 0 5"/>
+                        Margin="0 5 0 5" />
 
                     <ComboBox
                         Text="{Binding Filter.OrderType}">
@@ -872,16 +894,16 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition
-                        Height="166*" />
+                        Height="317*" />
                     <RowDefinition
-                        Height="Auto" />
+                        Height="9*" />
                     <RowDefinition
-                        Height="197*" />
+                        Height="409*" />
                 </Grid.RowDefinitions>
 
                 <GridSplitter
                     Grid.Row="1"
-                    Margin="0 10 0 10"
+                    Margin="0,5,0,2"
                     Height="3"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center" />
@@ -919,6 +941,7 @@
                             <MenuItem
                                 Header="Пометить как 'Архив'"
                                 Command="{Binding OrderStatus}" />
+
                             <MenuItem
                                 Header="Удалить из отчета"
                                 Command="{Binding RemoveFromReport}" />
@@ -931,74 +954,90 @@
 
                         <DataGridTextColumn
                             Header="Дата"
-                            Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Системный Администратор"
                             Binding="{Binding Who}"
-                            Width="160" />
+                            Width="160"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="ОСП выполнения"
                             Binding="{Binding OspWork}"
-                            Width="130" />
+                            Width="130"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="ОСП заказчика"
                             Binding="{Binding OspOrder}"
-                            Width="130" />
+                            Width="130"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Вид заявки"
                             Binding="{Binding OrderType}"
-                            Width="140" />
+                            Width="140"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Номер заявки"
                             Binding="{Binding OrderNum}"
-                            Width="90" />
+                            Width="90"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Инвентарный номер снятого"
                             Binding="{Binding OldInv}"
-                            Width="170" />
+                            Width="170"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Инвентарный номер нового"
                             Binding="{Binding NewInv}"
-                            Width="170" />
+                            Width="170"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Старое имя ПК"
-                            Binding="{Binding OldPCName}" />
+                            Binding="{Binding OldPCName}"
+                            ElementStyle="{StaticResource Wrap}" />
+
                         <DataGridTextColumn
                             Header="Тип ОС"
                             Binding="{Binding OsType}"
-                            Width="120" />
+                            Width="120"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Причина обращения"
                             Binding="{Binding Why}"
-                            Width="120" />
+                            Width="120"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Результат"
-                            Binding="{Binding Results}" />
+                            Binding="{Binding Results}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Заявленная неиспраность"
                             Binding="{Binding Brocken}"
-                            Width="180" />
+                            Width="180"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Выполнение"
                             Width="220"
-                            Binding="{Binding Pass}" />
+                            Binding="{Binding Pass}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Статус заявки"
                             Width="150"
-                            Binding="{Binding NoActive}" />
+                            Binding="{Binding NoActive}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                     </DataGrid.Columns>
 
@@ -1202,7 +1241,8 @@
                                         ItemsSource="{Binding MainObject.ComboBox.Accesses}"
                                         DisplayMemberPath="Name"
                                         Width="200"
-                                        HorizontalAlignment="Right" />
+                                        HorizontalAlignment="Right"
+                                        Visibility="{Binding NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                                 </DockPanel>
 
@@ -1746,6 +1786,7 @@
                                 Header="Выгрузить выделенное в Excel (пока недоступно)"
                                 IsEnabled="False"
                                 Command="{Binding GetExcel}" />
+
                             <MenuItem
                                 Header="Копировать"
                                 Command="Copy" />
@@ -1862,7 +1903,8 @@
                             Header="Дата"
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.Date, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
-                            Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding Date, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.Status, 
@@ -1876,6 +1918,9 @@
                                     <Setter
                                         Property="Foreground"
                                         Value="{Binding Status, Converter={StaticResource RepairsTextColorConverter}}" />
+                                    <Setter
+                                        Property="TextWrapping"
+                                        Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
 
@@ -1885,67 +1930,78 @@
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.OsName, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Наименование"
-                            Binding="{Binding OsName}" />
+                            Binding="{Binding OsName}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.Model, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Модель"
-                            Binding="{Binding Model}" />
+                            Binding="{Binding Model}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.SNumber, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Серийный нномер"
-                            Binding="{Binding SNumber}" />
+                            Binding="{Binding SNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.InvNumber, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Инв.номер"
-                            Binding="{Binding InvNumber}" />
+                            Binding="{Binding InvNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.InvNumber, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="СЦ ОКС"
-                            Binding="{Binding ScOks}" />
+                            Binding="{Binding ScOks}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.DiagNumber, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Основание"
-                            Binding="{Binding DiagNumber}" />
+                            Binding="{Binding DiagNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.KaProvider, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="КА поставщик"
-                            Binding="{Binding KaProvider}" />
+                            Binding="{Binding KaProvider}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.KaRepair, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="КА ремонт"
-                            Binding="{Binding KaRepair}" />
+                            Binding="{Binding KaRepair}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.HandedOver, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Передал"
-                            Binding="{Binding HandedOver}" />
+                            Binding="{Binding HandedOver}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.Defect, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Неисправность"
-                            Binding="{Binding Defect}" />
+                            Binding="{Binding Defect}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.ShipmentDate, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Дата отгрузки"
-                            Binding="{Binding ShipmentDate, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding ShipmentDate, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.DaysOfRepair, 
@@ -1959,6 +2015,9 @@
                                     <Setter
                                         Property="Foreground"
                                         Value="{Binding DaysOfRepair, Converter={StaticResource RepairsTextColorConverter}}" />
+                                    <Setter
+                                        Property="TextWrapping"
+                                        Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
 
@@ -1968,37 +2027,43 @@
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.ReturnFromRepair, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Вернулось из ремонта"
-                            Binding="{Binding ReturnFromRepair, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding ReturnFromRepair, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.ProviderOrder, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Номер заявки поставщика СЦ"
-                            Binding="{Binding ProviderOrder}" />
+                            Binding="{Binding ProviderOrder}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.RepairBill, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Согласованная стоимость ремонта"
-                            Binding="{Binding RepairBill}" />
+                            Binding="{Binding RepairBill}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.WarrantyBasis, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Основание гарантии"
-                            Binding="{Binding WarrantyBasis}" />
+                            Binding="{Binding WarrantyBasis}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.StartWarranty, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Дата начала гарантии"
-                            Binding="{Binding StartWarranty, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding StartWarranty, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.Warranty, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
                             Header="Тип ремонта"
-                            Binding="{Binding Warranty}" />
+                            Binding="{Binding Warranty}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                     </DataGrid.Columns>
 
@@ -2584,8 +2649,8 @@
                     Margin="0 -30 0 0"
                     Command="{Binding LoadRepairs}">
 
-                    <TextBlock 
-                        Text="Загрузить Excel"/>
+                    <TextBlock
+                        Text="Загрузить Excel" />
                 </Button>
 
             </StackPanel>
@@ -2637,6 +2702,14 @@
 
                     </DataGrid.Resources>
 
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem
+                                Header="Переместить"
+                                Command="{Binding OpenSwitchDevicerepair}" />
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+
                     <DataGrid.Columns>
 
                         <DataGridTextColumn
@@ -2653,6 +2726,9 @@
                                     <Setter
                                         Property="Foreground"
                                         Value="{Binding Status, Converter={StaticResource RepairsTextColorConverter}}" />
+                                    <Setter
+                                        Property="TextWrapping"
+                                        Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
 
@@ -2660,43 +2736,53 @@
 
                         <DataGridTextColumn
                             Header="Наименование"
-                            Binding="{Binding OsName}" />
+                            Binding="{Binding OsName}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Модель"
-                            Binding="{Binding Model}" />
+                            Binding="{Binding Model}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Серийный номер"
-                            Binding="{Binding SNumber}" />
+                            Binding="{Binding SNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Инв.номер"
-                            Binding="{Binding InvNumber}" />
+                            Binding="{Binding InvNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Основание"
-                            Binding="{Binding DiagNumber}" />
+                            Binding="{Binding DiagNumber}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="КА поставщик"
-                            Binding="{Binding KaProvider}" />
+                            Binding="{Binding KaProvider}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="КА ремонт"
-                            Binding="{Binding KaRepair}" />
+                            Binding="{Binding KaRepair}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Передал"
-                            Binding="{Binding HandedOver}" />
+                            Binding="{Binding HandedOver}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Неисправность"
-                            Binding="{Binding Defect}" />
+                            Binding="{Binding Defect}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Дата отгрузки"
-                            Binding="{Binding ShipmentDate, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding ShipmentDate, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Дней в ремонте"
@@ -2708,6 +2794,9 @@
                                     <Setter
                                         Property="Foreground"
                                         Value="{Binding DaysOfRepair, Converter={StaticResource RepairsTextColorConverter}}" />
+                                    <Setter
+                                        Property="TextWrapping"
+                                        Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
 
@@ -2715,27 +2804,33 @@
 
                         <DataGridTextColumn
                             Header="Вернулось из ремонта"
-                            Binding="{Binding ReturnFromRepair, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding ReturnFromRepair, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Номер заявки поставщика СЦ"
-                            Binding="{Binding ProviderOrder}" />
+                            Binding="{Binding ProviderOrder}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Согласованная стоимость ремонта"
-                            Binding="{Binding RepairBill}" />
+                            Binding="{Binding RepairBill}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Основание гарантии"
-                            Binding="{Binding WarrantyBasis}" />
+                            Binding="{Binding WarrantyBasis}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Дата начала гарантии"
-                            Binding="{Binding StartWarranty, StringFormat='{}{0:dd.MM.yyy}'}" />
+                            Binding="{Binding StartWarranty, StringFormat='{}{0:dd.MM.yyy}'}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
                             Header="Гарантия"
-                            Binding="{Binding Warranty}" />
+                            Binding="{Binding Warranty}"
+                            ElementStyle="{StaticResource Wrap}" />
 
                     </DataGrid.Columns>
 
@@ -3167,7 +3262,7 @@
                 <Button
                     x:Name="UserWorksButton"
                     Command="{Binding ViewModelsVisibility}"
-                    CommandParameter="UserWorks"
+                    CommandParameter="User"
                     MouseEnter="LeftMenuButton_MouseEnter"
                     MouseLeave="LeftMenuButton_MouseLeave">
 
@@ -3223,7 +3318,7 @@
                     x:Name="AllRepairsButton"
                     IsEnabled="{Binding MainObject.Access.VisibilityRepairs}"
                     Command="{Binding ViewModelsVisibility}"
-                    CommandParameter="AllRepairs"
+                    CommandParameter="Repairs"
                     MouseEnter="LeftMenuButton_MouseEnter"
                     MouseLeave="LeftMenuButton_MouseLeave">
 
@@ -3251,7 +3346,7 @@
                     x:Name="DevicesButton"
                     IsEnabled="{Binding MainObject.Access.VisibilityDevices}"
                     Command="{Binding ViewModelsVisibility}"
-                    CommandParameter="AllDevices"
+                    CommandParameter="Devices"
                     MouseEnter="LeftMenuButton_MouseEnter"
                     MouseLeave="LeftMenuButton_MouseLeave">
 

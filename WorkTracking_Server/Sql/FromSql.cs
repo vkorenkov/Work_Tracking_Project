@@ -36,7 +36,7 @@ namespace WorkTracking_Server.Sql
 
             foreach (var d in tempDev)
             {
-                d.Repairs = tempRep.Where(x => x.DeviceId == d.Id).ToList();
+                d.Repairs = new ObservableCollection<RepairClass>(tempRep.Where(x => x.DeviceId == d.Id));
             }
 
             return new ObservableCollection<Devices>(tempDev.OrderBy(x => x.InvNumber));
@@ -44,6 +44,22 @@ namespace WorkTracking_Server.Sql
 
         public ObservableCollection<RepairClass> GetRepairs()
         {
+            #region _
+            //foreach (var r in dataContext.Repairs)
+            //{
+            //    foreach (PropertyInfo p in r.GetType().GetProperties())
+            //    {
+            //        if (p.PropertyType == typeof(DateTime))
+            //        {
+            //            if (p.GetValue(r) == null)
+            //            {
+            //                p.SetValue(r, null);
+            //            }
+            //        }
+            //    }
+            //}
+            #endregion
+
             return new ObservableCollection<RepairClass>(dataContext.Repairs);
         }
 

@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using System.Windows.Input;
 using WorkTrackingLib.ProcessClasses;
 using System.Collections.ObjectModel;
+using NewWorkTracking.Windows;
 
 namespace NewWorkTracking.ViewModels
 {
@@ -88,26 +89,17 @@ namespace NewWorkTracking.ViewModels
         /// <summary>
         /// Команда записи изменений ремонта
         /// </summary>
-        public ICommand ChangeRepair => new RelayCommand<object>(obj =>
-        {
-            ConnectionClass.hubConnection.InvokeAsync("StartChangeRepair", SelectedRepair);
-        });
+        public ICommand ChangeRepair => new RelayCommand<object>(obj => ConnectionClass.hubConnection.InvokeAsync("StartChangeRepair", SelectedRepair));
 
         /// <summary>
         /// Команда записи изменений устройства
         /// </summary>
-        public ICommand ChangeDevice => new RelayCommand<object>(obj =>
-        {
-            ConnectionClass.hubConnection.InvokeAsync("StartChangeDevice", SelectedDevice);
-        });
+        public ICommand ChangeDevice => new RelayCommand<object>(obj => ConnectionClass.hubConnection.InvokeAsync("StartChangeDevice", SelectedDevice));
 
         /// <summary>
         /// Команда добавления нового устройства
         /// </summary>
-        public ICommand AddNewDevice => new RelayCommand<object>(obj =>
-        {
-            ConnectionClass.hubConnection.InvokeAsync("RunAddDevice", new Devices() { DeviceName = DeviceName, InvNumber = InvNumber, OsName = OsName });
-        });
+        public ICommand AddNewDevice => new RelayCommand<object>(obj => ConnectionClass.hubConnection.InvokeAsync("RunAddDevice", new Devices() { DeviceName = DeviceName, InvNumber = InvNumber, OsName = OsName }));
 
         /// <summary>
         /// Команда импорта данных из excel
@@ -178,6 +170,18 @@ namespace NewWorkTracking.ViewModels
             }
         });
 
+        public ICommand OpenSwitchDevicerepair => new RelayCommand<object>(obj =>
+        {
+            SwitchDevicesRepairViewModel switchDevices = new SwitchDevicesRepairViewModel(SelectedRepair, MainObject.Devices);
+
+            SwitchDeviceRepairWindow switchDeviceWindow = new SwitchDeviceRepairWindow()
+            {
+                DataContext = switchDevices
+            };
+
+            switchDeviceWindow.ShowDialog();
+        });
+
         public DevicesViewModel(MainObject mainObject)
         {
             SignalRActions();
@@ -199,10 +203,10 @@ namespace NewWorkTracking.ViewModels
                 dispather.Invoke(() => MainObject.Devices.Insert(0, newDevice));
             });
 
-            ConnectionClass.hubConnection.On<bool>("DeviceNotAdded", (result) => dispather.Invoke(() => 
+            ConnectionClass.hubConnection.On<bool>("DeviceNotAdded", (result) => dispather.Invoke(() =>
             Message.Show("Ошибка добавления", "Ошибка добавления. Возможно такое устройство уже существует", MessageBoxButton.OK)));
 
-            ConnectionClass.hubConnection.On<bool>("DeviceChangedError", (result) => dispather.Invoke(() => 
+            ConnectionClass.hubConnection.On<bool>("DeviceChangedError", (result) => dispather.Invoke(() =>
             {
                 Message.Show("Ошибка изменения", $@"Вы не можете изменить инв.номер выбранного устройства на ""{SelectedDevice.InvNumber}"", т.к. устройство с таким инв.номером уже существует", MessageBoxButton.OK);
 
@@ -234,7 +238,7 @@ namespace NewWorkTracking.ViewModels
                 {
                     if (r.Id == newRepair.DeviceId)
                     {
-                        dispather.Invoke(() => { r.Repairs.Add(newRepair); r.Repairs = new List<RepairClass>(r.Repairs); });
+                        dispather.Invoke(() => { r.Repairs.Add(newRepair); r.Repairs = new ObservableCollection<RepairClass>(r.Repairs); });
 
                         break;
                     }
@@ -245,18 +249,20 @@ namespace NewWorkTracking.ViewModels
             {
                 dispather.Invoke(() =>
                 {
-                    var tempDevice = MainObject.Devices.Where(x => x.Id == changeRepair.DeviceId).FirstOrDefault();
-
-                    foreach (var a in tempDevice.Repairs.Where(x => x.Id == changeRepair.Id).FirstOrDefault().GetType().GetProperties())
+                    foreach (var d in MainObject.Devices)
                     {
-                        foreach (var c in changeRepair.GetType().GetProperties())
-                        {
-                            if (a.Name == c.Name)
-                            {
-                                a.SetValue(tempDevice.Repairs.Where(x => x.Id == changeRepair.Id).FirstOrDefault(), c.GetValue(changeRepair));
+                        d.Repairs.Remove(d.Repairs.Where(x => x.Id == changeRepair.Id).FirstOrDefault());
+                    }
 
-                                continue;
-                            }
+                    foreach (var d in MainObject.Devices)
+                    {
+                        if (changeRepair.DeviceId == d.Id)
+                        {
+                            d.Repairs.Add(changeRepair);
+
+                            d.Repairs = new ObservableCollection<RepairClass>(d.Repairs);
+
+                            break;
                         }
                     }
                 });

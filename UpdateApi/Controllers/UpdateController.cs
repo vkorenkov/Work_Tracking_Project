@@ -26,5 +26,11 @@ namespace UpdateApi.Controllers
                 return null;
             }        
         }
+
+        //[HttpGet("GetNewVersion")]
+        //public NewVersionClass GetNewVersion()
+        //{
+        //    return new NewVersionClass { NewVersionArray = System.IO.File.ReadAllBytes($@"{AppDomain.CurrentDomain.BaseDirectory}/wwwroot/worktrackingupdate.zip") };
+        //}
     }
 }

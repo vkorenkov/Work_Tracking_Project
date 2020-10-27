@@ -12,9 +12,9 @@ namespace WorkTrackingLib.Models
     {
         public int Id { get; set; }
 
-        private List<RepairClass> repairs;
+        private ObservableCollection<RepairClass> repairs;
         [NotMapped]
-        public List<RepairClass> Repairs 
+        public ObservableCollection<RepairClass> Repairs 
         {
             get => repairs;
             set { repairs = value; OnPropertyChanged(nameof(Repairs)); }
@@ -51,7 +51,7 @@ namespace WorkTrackingLib.Models
 
         public Devices()
         {
-            Repairs = new List<RepairClass>();
+            Repairs = new ObservableCollection<RepairClass>();
         }
 
         /// <summary>

@@ -52,10 +52,7 @@ namespace NewWorkTracking.ViewModels
 
         public ICommand AddWork => new RelayCommand<object>(obj =>
         {
-            if (!string.IsNullOrEmpty(MainObject.Access.Name))
-                NewWork.Who = MainObject.Access.Name;
-            else
-                NewWork.Who = "Unknown_User";
+            NewWork.Who = MainObject.Access.Name;
 
             var tempListProp = ChechForEmpty(NewWork);
 
@@ -82,9 +79,6 @@ namespace NewWorkTracking.ViewModels
             }
         });
 
-        /// <summary>
-        /// Команда добавления тестовых работ
-        /// </summary>
         public ICommand AddManyWork => new RelayCommand<object>(obj =>
         {
             NewWork.Who = MainObject.Access.Name;

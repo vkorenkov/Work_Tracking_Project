@@ -198,42 +198,16 @@ namespace NewWorkTracking.ViewModels
         /// </summary>
         private async void GetExele()
         {
-            string fileName = string.Empty;
-
-            string path = string.Empty;
-
-            //ProgressBarStartStop = true;
-
             Status = "В работе";
 
             // Создание временной коллекции 
-            List<NewWrite> tempCol;
-
-            // Условие, при котором, выгружаются в файл Excel все работы по фильтрам или без
-            if (selectedOrders.Count <= 2)
-            {
-                tempCol = MainObject.AdminWorks.ToList();
-            }
-            // Условие при котором выгружаются только выделенные работы
-            else
-            {
-                tempCol = selectedOrders.ToList();
-            }
-
+            List<NewWrite> tempCol = GetWorksCount();
+           
             SaveOpenFile saveOpen = new SaveOpenFile();
 
-            if (Filter.DateOne != null && Filter.DateTwo != null)
-            {
-                // Имя файла если даты были выбраны
-                fileName = "Отчет " + Filter.DateOne.Value.ToString("dd.MM.yyyy") + " - " + Filter.DateTwo.Value.ToString("dd.MM.yyyy");
-            }
-            else
-            {
-                // Стандартное имя файла если даты не выбраны
-                fileName = "Отчет за все время";
-            }
+            string fileName = GetFileName(Filter.DateOne, Filter.DateTwo);
 
-            path = saveOpen.SaveDialog(fileName);
+            string path = saveOpen.SaveDialog(fileName);
 
             if (!string.IsNullOrEmpty(path))
             {
@@ -242,12 +216,10 @@ namespace NewWorkTracking.ViewModels
                 if (temp == true)
                 {
                     Status = $"Сохранено";
-
-                    //ProgressBarStartStop = false;
                 }
-                else { Status = "Ошибка сохранения"; /*ProgressBarStartStop = false;*/ }
+                else { Status = "Ошибка сохранения";}
             }
-            else { Status = "Сохранение отменено"; /*ProgressBarStartStop = false;*/ }
+            else { Status = "Сохранение отменено"; }
         }
 
         /// <summary>
@@ -261,6 +233,44 @@ namespace NewWorkTracking.ViewModels
             foreach (var item in list)
             {
                 selectedOrders.Add(item as NewWrite);
+            }
+        }
+
+        /// <summary>
+        /// Метод выдает имя фала на основе выбранных дат в фильтре по датам
+        /// </summary>
+        /// <param name="dateOne"></param>
+        /// <param name="dateTwo"></param>
+        /// <returns></returns>
+        private string GetFileName(DateTime? dateOne, DateTime? dateTwo)
+        {
+            if (dateOne != null && dateTwo != null)
+            {
+                // Имя файла если даты были выбраны
+                return "Отчет " + dateOne.Value.ToString("dd.MM.yyyy") + " - " + dateTwo.Value.ToString("dd.MM.yyyy");
+            }
+            else
+            {
+                // Стандартное имя файла если даты не выбраны
+                return "Отчет за все время";
+            }
+        }
+
+        /// <summary>
+        /// Метод проверяет количество выбранных объектов и выдает обра
+        /// </summary>
+        /// <returns></returns>
+        private List<NewWrite> GetWorksCount()
+        {
+            // Условие, при котором, выгружаются в файл Excel все работы по фильтрам или без
+            if (selectedOrders.Count <= 2)
+            {
+                return MainObject.AdminWorks.ToList();
+            }
+            // Условие при котором выгружаются только выделенные работы
+            else
+            {
+                return selectedOrders.ToList();
             }
         }
     }
