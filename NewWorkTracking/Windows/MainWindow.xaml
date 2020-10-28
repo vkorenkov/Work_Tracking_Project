@@ -599,7 +599,7 @@
                         DisplayMemberPath="Name" />
 
                     <TextBlock
-                        Text="Зезультат работ"
+                        Text="Результат работ"
                         Margin="0 5 0 5" />
 
                     <ComboBox
@@ -744,7 +744,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding AllWorksViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="False">
+            d:IsHidden="True">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -2480,7 +2480,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding DevicesViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="True">
+            d:IsHidden="False">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -2553,7 +2553,8 @@
                 <Button
                     Command="{Binding OpenCleanRepairCard}">
                     <TextBlock
-                        Text="Добавить ремонт" />
+                        Text="Добавить ремонт" 
+                        FontSize="10"/>
                 </Button>
 
             </StackPanel>

@@ -108,9 +108,18 @@
             Visibility="{Binding ChangeTextBoxVis}">
 
             <TextBox
+                x:Name="txbChangeServer"
                 Margin="20 0 20 5"
                 VerticalAlignment="Center"
-                Text="{Binding NewServer}" />
+                Text="{Binding NewServer, UpdateSourceTrigger=PropertyChanged}">
+
+                <TextBox.InputBindings>
+                    <KeyBinding
+                        Key="Enter"
+                        Command="{Binding ChangeServer}"/>
+                </TextBox.InputBindings>
+                
+            </TextBox>
 
             <Button
                 Margin="5 0 5 5"

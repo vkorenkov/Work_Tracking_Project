@@ -44,7 +44,15 @@
         <TextBox
             Grid.Row="1"
             Margin="100,0,100,0"
-            Text="{Binding NewServer}"/>
+            Text="{Binding NewServer, UpdateSourceTrigger=PropertyChanged}">
+
+            <TextBox.InputBindings>
+                <KeyBinding 
+                    Key="Enter"
+                    Command="{Binding ChangeServer}"/>
+            </TextBox.InputBindings>
+            
+        </TextBox>
 
         <DockPanel
             Margin="20"
