@@ -9,7 +9,7 @@
     mc:Ignorable="d"
     Title="{Binding Repair.InvNumber}"
     Name="RepairCardWindow"
-    Background="#1d1d1d"
+    Style="{DynamicResource WindowStyle}"
     Height="422.328"
     Width="800"
     ResizeMode="NoResize"

@@ -1479,7 +1479,7 @@
                                         <ColorAnimationUsingKeyFrames
                                             Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)">
                                             <LinearColorKeyFrame
-                                                KeyTime="0:0:0.2"
+                                                KeyTime="0:0:0.3"
                                                 Value="Goldenrod" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -1494,7 +1494,7 @@
                                         <ColorAnimationUsingKeyFrames
                                             Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)">
                                             <LinearColorKeyFrame
-                                                KeyTime="0:0:0.2"
+                                                KeyTime="0:0:0.3"
                                                 Value="Transparent" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -3148,7 +3148,11 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <Style
+        x:Key="WindowStyle"
         TargetType="{x:Type Window}">
+        <Setter
+            Property="FocusVisualStyle"
+            Value="{x:Null}" />
         <Setter
             Property="Foreground"
             Value="White" />
@@ -3161,9 +3165,9 @@
                 <ControlTemplate
                     TargetType="{x:Type Window}">
                     <Border
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        Background="{TemplateBinding Background}">
+                        BorderBrush="White"
+                        BorderThickness="1"
+                        Background="#1d1d1d">
                         <AdornerDecorator>
                             <ContentPresenter />
                         </AdornerDecorator>

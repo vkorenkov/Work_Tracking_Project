@@ -1,10 +1,6 @@
 ﻿using NewWorkTracking.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -35,6 +31,23 @@ namespace NewWorkTracking.ViewModels
             set { newServer = value; OnPropertyChanged(nameof(NewServer)); }
         }
 
+        private string newUpdateServer;
+        /// <summary>
+        /// Свойство нового сервера
+        /// </summary>
+        public string NewUpdateServer
+        {
+            get => newUpdateServer;
+            set { newUpdateServer = value; OnPropertyChanged(nameof(NewUpdateServer)); }
+        }
+
+        private float restartValue;
+        public float RestartValue
+        {
+            get => restartValue;
+            set { restartValue = value; OnPropertyChanged(nameof(RestartValue)); }
+        }
+
         private bool controlEnable;
         /// <summary>
         /// Активация\деактивация управления окном загрузки
@@ -49,37 +62,40 @@ namespace NewWorkTracking.ViewModels
         /// <summary>
         /// Команда изменения сервера
         /// </summary>
-        public ICommand ChangeServer
+        public ICommand ChangeServer => new RelayCommand<object>(async obg =>
         {
-            get
+            Description = "Проверка введенных данных. Подождите.";
+
+            ControlEnable = false;
+
+            if (!string.IsNullOrWhiteSpace(NewUpdateServer))
             {
-                return new RelayCommand<object>(async obg =>
-                {
-                    Description = "Проверка введенных данных. Подождите.";
-
-                    ControlEnable = false;
-
-                    if (await newServer.WriteNewServer())
-                    {
-                        Description = $@"Сервер успешно изменен. Текущий сервер ""{ConnectionClass.connectionPath.Server}""";
-
-                        ControlEnable = true;
-
-                        Process.Start($"Work_Tracking.exe");
-
-                        Application.Current.Shutdown();
-                    }
-                    else
-                    {
-                        Description = $@"Ошибка подключения к новому серверу. Проверьте введенные данные, сервер не будет изменен. Введенный вами сервер ""{NewServer}"". Текущий сервер: ""{ConnectionClass.connectionPath.Server}""";
-
-                        ControlEnable = true;
-                    }
-                });
+                Description = await NewUpdateServer.WriteNewUpdateServer() == true ? $@"Изменения применены. Текущий сервер: ""{ConnectionClass.connectionPath.Server}"", Текущий сервер обновлений: {NewUpdateServer}" :
+                $@"Ошибка подключения к новому серверу. Текущий сервер: ""{ConnectionClass.connectionPath.Server}"", текущий сервер обновлений: ""{ConnectionClass.connectionPath.UpdateServer}""";
             }
-        }
 
-        public ICommand CloseChsngeServer => new RelayCommand<object>(obj => 
+            if (!string.IsNullOrWhiteSpace(NewServer))
+            {
+                var result = await newServer.WriteNewServer();
+
+                Description = result == true ? $@"Изменения применены. Текущий сервер: ""{ConnectionClass.connectionPath.Server}"", Текущий сервер обновлений: {ConnectionClass.connectionPath.UpdateServer}." :
+                $@"Ошибка подключения к новому серверу. Текущий сервер: ""{ConnectionClass.connectionPath.Server}"", текущий сервер обновлений: ""{ConnectionClass.connectionPath.UpdateServer}""";
+
+                if (result)
+                {
+                    await Task.Run(() => RestartTimer(5));
+
+                    Process.Start($"Work_Tracking.exe");
+
+                    Application.Current.Shutdown();
+                }
+            }
+
+            ControlEnable = true;
+        }, canExe => !string.IsNullOrWhiteSpace(NewUpdateServer) || !string.IsNullOrWhiteSpace(NewServer));
+
+
+        public ICommand CloseChangeServer => new RelayCommand<object>(obj =>
         {
             Application.Current.Windows.CloseWindow("ChangeServer");
         });
@@ -88,7 +104,22 @@ namespace NewWorkTracking.ViewModels
         {
             ControlEnable = true;
 
-            Description = $@"Введите имя или IP-адрес сервера без ""\\"". Пример имени сервера: m1-dl-server. Пример IP-адреса: 10.130.10.10. Текущий адрес сервера: ""{ConnectionClass.connectionPath.Server}""";
+            Description = $@"Введите имя или IP-адрес сервера без ""\\"". Пример имени сервера: m1-dl-server. Пример IP-адреса: 10.130.10.10. Текущий сервер: " +
+                $@"""{ConnectionClass.connectionPath.Server}"", текущий сервер обновлений: ""{ConnectionClass.connectionPath.UpdateServer}""";
+        }
+
+        private void RestartTimer(float maxValue)
+        {
+            float i = 0;
+
+            while (i < maxValue)
+            {
+                RestartValue = i;
+
+                i += 0.01f;
+
+                Thread.Sleep(10);
+            }
         }
     }
 }

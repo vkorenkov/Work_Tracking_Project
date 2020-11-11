@@ -13,7 +13,7 @@
     Name="SwitchDeviceRepairWindowXaml"
     Height="181"
     Width="300"
-    Background="#1d1d1d"
+    Style="{DynamicResource WindowStyle}"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None">
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +15,8 @@ namespace NewWorkTracking.Models
     static class ClientExtentions
     {
         static HubConnection hubConnection;
+
+        static HttpClient client;
 
         /// <summary>
         /// (Расширение) Метод записывает данные по новому серверу в файл адреса сервера
@@ -46,10 +49,8 @@ namespace NewWorkTracking.Models
 
                         return true;
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
-
                         return false;
                     }
                 }
@@ -61,6 +62,30 @@ namespace NewWorkTracking.Models
 
         }
 
+        public async static Task<bool> WriteNewUpdateServer(this string newUpdateServer)
+        {
+            client = new HttpClient();
+
+            // Десериализация json файла подключения
+            var tempReadedFile = JsonConvert.DeserializeObject<ConnectionPathInfo>(File.ReadAllText(@"Resources/serverInfo.json"));
+
+            tempReadedFile.UpdateServer = newUpdateServer.Replace(",", ".");
+
+            try
+            {
+                var test = await client.GetStringAsync($"http://{tempReadedFile.UpdateServer}/api/Update/Check");
+
+                // Запись временного объекта в файл Json
+                File.WriteAllText(@"Resources/serverInfo.json", JsonConvert.SerializeObject(tempReadedFile));
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private static HubConnection CreateTempConnectionString(string newServer)
         {
             try
@@ -70,7 +95,7 @@ namespace NewWorkTracking.Models
             }
             catch (Exception ex)
             {
-                Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
+                //Message.Show("Ошибка", ex.Message, MessageBoxButton.OK);
 
                 return null;
             }

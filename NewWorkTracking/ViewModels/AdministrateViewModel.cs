@@ -2,6 +2,8 @@
 using NewWorkTracking.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -116,7 +118,19 @@ namespace NewWorkTracking.ViewModels
             set { item = value; OnPropertyChanged(nameof(Item)); }
         }
 
+        private ObservableCollection<string> userList;
+        public ObservableCollection<string> UserList
+        {
+            get => userList;
+            set { userList = value; OnPropertyChanged(nameof(UserList)); }
+        }
+
         private Dispatcher dispatcher;
+
+        public ICommand SearchName => new RelayCommand<object>(obj =>
+        {
+            GetUsersList();
+        });
 
         /// <summary>
         /// Команда добавления нового объекта
@@ -127,7 +141,7 @@ namespace NewWorkTracking.ViewModels
             if ((string)obj == "User")
             {
                 // Поддтверждение действия
-                if (Message.Show("Внимание", $@"Добавить нового польщователя с Ф.И.О ""{NewUser}"" и уровнем доступа ""{AccessLevel}""?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (Message.Show("Внимание", $@"Добавить нового пользователя с Ф.И.О ""{NewUser}"" и уровнем доступа ""{AccessLevel}""?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     // Отправка запроса и объекта нового пользователя на сервер
                     ConnectionClass.hubConnection.InvokeAsync("RunAddNewUser", new Admins() { Name = NewUser, Access = AccessLevel });
@@ -225,6 +239,7 @@ namespace NewWorkTracking.ViewModels
             MainObject = mainObject;
             SignalRActions();
             CatSelected = "СцОкс";
+            UserList = new ObservableCollection<string>();
         }
 
         /// <summary>
@@ -239,14 +254,16 @@ namespace NewWorkTracking.ViewModels
                 {
                     MainObject.ComboBox.Accesses.Add(user);
 
-                    MainObject.ComboBox.Accesses = new List<Admins>(MainObject.ComboBox.Accesses);
+                    MainObject.ComboBox.Accesses = new List<Admins>(MainObject.ComboBox.Accesses.OrderBy(x => x.Name));
                 });
             });
 
             // Действие при измении объекта
-            ConnectionClass.hubConnection.On<ComboboxDataSource>("UpdateItem", (comboboxes) => 
-            { 
-                dispatcher.Invoke(() => MainObject.ComboBox = comboboxes); ChangeCat(); 
+            ConnectionClass.hubConnection.On<ComboboxDataSource>("UpdateItem", (comboboxes) =>
+            {
+                comboboxes.Accesses = comboboxes.Accesses.OrderBy(x => x.Name).ToList();
+
+                dispatcher.Invoke(() => MainObject.ComboBox = comboboxes); ChangeCat();
             });
         }
 
@@ -295,6 +312,33 @@ namespace NewWorkTracking.ViewModels
                         break;
                 }
             }
+        }
+
+        private async void GetUsersList()
+        {
+            var ad = new AdUsage();
+
+            ad.UserSearchEvent += Ad_TestEvent;
+
+            await Task.Run(() =>
+            {
+                try
+                {
+                    UserList = ad.GetAdUsers("User", NewUser);
+                }
+                catch (Exception e)
+                {
+                    if (e.GetType() == typeof(ArgumentException))
+                        NewUser = "Заполните поле поиска.";
+                }
+            });
+
+            ad.UserSearchEvent -= Ad_TestEvent;
+        }
+
+        private void Ad_TestEvent(string m)
+        {
+            NewUser = $"{m}";
         }
     }
 }

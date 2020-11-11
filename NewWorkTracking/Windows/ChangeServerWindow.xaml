@@ -7,9 +7,7 @@
     xmlns:local="clr-namespace:NewWorkTracking.Windows"
     xmlns:vm="clr-namespace:NewWorkTracking.ViewModels"
     mc:Ignorable="d"
-    Background="#1d1d1d"
-    BorderBrush="#FFFFFF"
-    BorderThickness="1"
+    Style="{DynamicResource WindowStyle}"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     Title="ChangeServerWindow"
@@ -23,52 +21,114 @@
     <Window.DataContext>
         <vm:ChangeServerViewModel />
     </Window.DataContext>
-    
+
+    <Window.InputBindings>
+        <KeyBinding 
+            Key="Esc"
+            Command="{Binding CloseChangeServer}"/>
+    </Window.InputBindings>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition
-                Height="152*" />
+                Height="80*" />
             <RowDefinition
-                Height="30*" />
+                Height="91*" />
             <RowDefinition
-                Height="237*" />
+                Height="27*" />
         </Grid.RowDefinitions>
 
-        <TextBlock
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center"
-            Margin="20"
-            Text="{Binding Description}"
-            TextWrapping="Wrap"/>
+        <StackPanel>
+            <TextBlock
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Margin="20 30 20 10"
+                TextWrapping="Wrap"
+                Text="{Binding Description}" />
 
-        <TextBox
+            <Grid>
+                
+                <ProgressBar
+                    Height="10"
+                    Maximum="5"
+                    Foreground="#1d1d1d"
+                    Value="{Binding RestartValue}" />
+
+                <TextBlock 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="10"
+                    Text="Перезапуск"/>
+            </Grid>
+            
+        </StackPanel>
+
+        <Border
             Grid.Row="1"
-            Margin="100,0,100,0"
-            Text="{Binding NewServer, UpdateSourceTrigger=PropertyChanged}">
+            BorderThickness="0 1 0 0"
+            BorderBrush="DarkGray">
 
-            <TextBox.InputBindings>
-                <KeyBinding 
-                    Key="Enter"
-                    Command="{Binding ChangeServer}"/>
-            </TextBox.InputBindings>
-            
-        </TextBox>
+            <StackPanel>
 
-        <DockPanel
-            Margin="20"
+                <TextBlock
+                    Margin="0 5 0 0"
+                    HorizontalAlignment="Center"
+                    Text="Сервер" />
+
+                <TextBox
+                    Margin="40 5 40 0"
+                    VerticalAlignment="Top"
+                    Text="{Binding NewServer, UpdateSourceTrigger=PropertyChanged}">
+
+                    <TextBox.InputBindings>
+                        <KeyBinding 
+                            Key="Enter"
+                            Command="{Binding ChangeServer}"/>
+                    </TextBox.InputBindings>
+                    
+                </TextBox>
+
+                <TextBlock
+                    Margin="0 10 0 0"
+                    HorizontalAlignment="Center"
+                    Text="Сервер обновлений" />
+
+                <TextBox
+                    Margin="40 5 40 5"
+                    VerticalAlignment="Bottom"
+                    Text="{Binding NewUpdateServer, UpdateSourceTrigger=PropertyChanged}">
+
+                    <TextBox.InputBindings>
+                        <KeyBinding
+                            Key="Enter"
+                            Command="{Binding ChangeServer}" />
+                    </TextBox.InputBindings>
+
+                </TextBox>
+
+            </StackPanel>
+        </Border>
+
+        <Border
             Grid.Row="2"
-            HorizontalAlignment="Center">
-            
-            <Button
-                Margin="5"
-                Content="Применить"
-                Command="{Binding ChangeServer}"/>
+            Margin="0 5 0 0"
+            BorderThickness="0 1 0 0"
+            BorderBrush="DarkGray">
+            <DockPanel
+                Margin="20"
+                HorizontalAlignment="Center">
 
-            <Button
-                Margin="5"
-                Content="Закрыть"
-                Command="{Binding CloseChsngeServer}"/>
-        </DockPanel>
+                <Button
+                    Margin="5"
+                    Content="Применить"
+                    Command="{Binding ChangeServer}" />
+
+                <Button
+                    Margin="5"
+                    Content="Закрыть"
+                    Command="{Binding CloseChangeServer}" />
+            </DockPanel>
+        </Border>
 
     </Grid>
 </Window>

@@ -12,8 +12,7 @@
     xmlns:local1="clr-namespace:NewWorkTracking.Style"
     mc:Ignorable="d"
     Title="{Binding ConnectStatus}"
-    Background="#1d1d1d"
-    BorderBrush="#FFFFFF"
+    Style="{DynamicResource WindowStyle}"
     BorderThickness="1"
     IsEnabled="{Binding Stat}"
     MinHeight="768"
@@ -118,15 +117,15 @@
 
                 <TextBox
                     x:Name="AddNewItemTextBlock"
-                    Text="{Binding Item}" />
+                    Text="{Binding Item}"/>
 
                 <TextBlock
                     Text="Изменить выбранное"
-                    Margin="0 5 0 5" />
+                    Margin="0 5 0 5"/>
 
                 <TextBox
                     Text="{Binding SelectedItem.Name}"
-                    Margin="0 5 0 5" />
+                    Margin="0 5 0 5"/>
 
                 <DockPanel
                     HorizontalAlignment="Left">
@@ -255,9 +254,18 @@
                     Text="Введите Ф.И.О"
                     Margin="0 5 0 5" />
 
-                <TextBox
+                <ComboBox
                     x:Name="AddNewUserTextBox"
-                    Text="{Binding NewUser}" />
+                    ItemsSource="{Binding UserList}"
+                    Text="{Binding NewUser}">
+
+                    <ComboBox.InputBindings>
+                        <KeyBinding 
+                            Key="enter"
+                            Command="{Binding SearchName}"/>
+                    </ComboBox.InputBindings>
+
+                </ComboBox>
 
                 <TextBlock
                     Text="Выберите уровень доступа"
@@ -744,7 +752,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding AllWorksViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="True">
+            d:IsHidden="False">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -2480,7 +2488,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding DevicesViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="False">
+            d:IsHidden="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -3402,6 +3410,7 @@
 
             <Button
                 Grid.Row="1"
+                FocusVisualStyle="{x:Null}"
                 x:Name="ChangeServerButton"
                 VerticalAlignment="Bottom"
                 MouseEnter="LeftMenuButton_MouseEnter"

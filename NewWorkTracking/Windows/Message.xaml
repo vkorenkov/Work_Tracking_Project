@@ -14,9 +14,7 @@
     WindowStyle="none"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    Background="{StaticResource DarkBrush}"
-    BorderBrush="#FFFFFF"
-    BorderThickness="1"
+    Style="{DynamicResource WindowStyle}"
     Topmost="True">
     <Grid>
 

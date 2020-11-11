@@ -186,6 +186,8 @@ namespace NewWorkTracking.ViewModels
 
             ConnectionClass.hubConnection.On<MainObject>("GiveAll", (mainObject) =>
             {
+                mainObject.ComboBox.Accesses = mainObject.ComboBox.Accesses.OrderBy(x => x.Name).ToList();
+
                 Status = "Запуск программы.";
 
                 Application.Current.Dispatcher.Invoke(() => StartMainWindow(mainObject));
