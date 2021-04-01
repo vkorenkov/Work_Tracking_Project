@@ -20,12 +20,12 @@ namespace WorkTrackingSite
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.ConfigureKestrel(opt =>
+                    {
+                        opt.Limits.MaxRequestBodySize = 10L * 1024L * 1024L * 1024L;
+                    });
 
-                    //webBuilder.ConfigureKestrel(opt =>
-                    //{
-                    //    opt.ListenAnyIP(5005);
-                    //}).UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

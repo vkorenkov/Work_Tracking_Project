@@ -209,6 +209,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behavior\ComboboxBehavior.cs" />
     <Compile Include="Behavior\DataGridBehavior.cs" />
     <Compile Include="Behavior\WindowBehavior.cs" />
     <Compile Include="Converters\AccsessConverter.cs" />

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -18,6 +19,10 @@ namespace NewWorkTracking.ViewModels
 {
     class UserWorksViewModel : AbstractViewModel
     {
+        private int _maxStringLenght = 12;
+
+        char[] symbols = new char[] { ' ', ',', '.', '?', '/', '\\', '-', '=', '_', '+', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '<', '>', '~', ';', ':' };
+
         private NewWrite newWork;
         public NewWrite NewWork
         {
@@ -50,6 +55,13 @@ namespace NewWorkTracking.ViewModels
             }
         }
 
+        private List<Osp> ospOrderList;
+        public List<Osp> OspOrderList
+        {
+            get => ospOrderList;
+            set { ospOrderList = value; OnPropertyChanged(nameof(OspOrderList)); }
+        }
+
         public ICommand AddWork => new RelayCommand<object>(obj =>
         {
             NewWork.Who = MainObject.Access.Name;
@@ -62,6 +74,12 @@ namespace NewWorkTracking.ViewModels
                 ConnectionClass.hubConnection.InvokeAsync("RunAddNewWork", NewWork);
 
                 UsersWorks.AddNewItem(NewWork);
+
+                NewWork = new NewWrite() { Date = NewWork.Date, OspOrder = NewWork.OspOrder, OspWork = NewWork.OspWork, OrderType = NewWork.OrderType };
+
+                NoNewInvNumCheck = false;
+
+                NoPcNameCheck = false;
             }
             else
             {
@@ -93,11 +111,14 @@ namespace NewWorkTracking.ViewModels
             });
         });
 
+        public bool NamesVisibilityCheck { get; set; } = true;
+
         public UserWorksViewModel(MainObject mainObject)
         {
             SignalRActions();
             ActiveVisibility = Visibility.Visible;
             MainObject = mainObject;
+            OspOrderList = new List<Osp>(MainObject.ComboBox.OspList);
             UsersWorks = new ListCollectionView(MainObject.AdminWorks.Where(x => x.Who == MainObject.Access.Name).ToList());
             NewWork = new NewWrite();
             NewWork.Date = DateTime.Today;
@@ -165,6 +186,42 @@ namespace NewWorkTracking.ViewModels
             }
 
             return noFill;
+        }
+
+        private bool CheckForErrors()
+        {
+            bool checkData = true;
+
+            var tempSymbols = "[A-Za-z][А-Яа-я][1-9]";
+            var tempLenght = @"^(.{10}|.{12})$";
+
+            if (!Regex.IsMatch(NewWork.OldInv, tempSymbols))
+            {
+                foreach (var t in symbols)
+                {
+                    if (NewWork.OldInv.Contains(t))
+                    {
+                        Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать только буквы и цифры", MessageBoxButton.OK);
+
+                        if (NewWork.OldInv != null)
+                            NewWork.OldInv = NewWork.OldInv.Replace(t, new char());
+                    }
+                }
+
+                checkData = false;
+            }
+
+            if (!Regex.IsMatch(NewWork.OldInv, tempLenght))
+            {
+                Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать от 10 до 12 символов. Символы, начиная с 12го будут удалены удалены.", MessageBoxButton.OK);
+
+                if (NewWork.OldInv != null && NewWork.OldInv.Length > 12)
+                    NewWork.OldInv = NewWork.OldInv.Remove(_maxStringLenght);
+
+                checkData = false;
+            }
+
+            return checkData;
         }
 
         private void SetNewRepair(NewWrite newWork)

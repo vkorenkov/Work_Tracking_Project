@@ -44,9 +44,14 @@ namespace WorkTracking_Server.Context
             //    Integrated Security=True");
 
             optBuilder.UseSqlServer(
-                @"Server=(localdb)\MSSQLLocalDB;
-                DataBase=PassYourWork;
+                @"Server=SKY-244\OKS_SQL;
+                DataBase=TestWorkTracking;
                 Integrated Security=True");
+
+            //optBuilder.UseSqlServer(
+            //    @"Server=(localdb)\MSSQLLocalDB;
+            //    DataBase=PassYourWork;
+            //    Integrated Security=True");
         }
     }
 }

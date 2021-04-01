@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using WorkTrackingLib.Models;
 
 namespace NewWorkTracking
 {
@@ -47,7 +48,7 @@ namespace NewWorkTracking
 
         private void GetButtonName(Button button)
         {
-            switch(button.Name)
+            switch (button.Name)
             {
                 case "UserWorksButton":
                     toolTipText = "Заявки пользователя";
@@ -74,6 +75,6 @@ namespace NewWorkTracking
                     popupUC.PlacementTarget = ChangeServerButton;
                     break;
             }
-        }
+        }      
     }
 }

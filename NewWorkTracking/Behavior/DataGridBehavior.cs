@@ -23,7 +23,7 @@ namespace NewWorkTracking.Behavior
             AssociatedObject.SelectionChanged += AssociatedObject_SelectionChanged;
         }
 
-        // Обрботчик события изсенения выбора DataGrid
+        // Обрботчик события изменения выбора DataGrid
         private void AssociatedObject_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is DataGrid grid)

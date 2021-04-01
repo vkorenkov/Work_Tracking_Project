@@ -78,6 +78,28 @@ namespace NewWorkTracking.ViewModels
         });
 
         /// <summary>
+        /// Команда удаления объекта из отчета
+        /// </summary>
+        public ICommand RemoveFromReport
+        {
+            get
+            {
+                return new RelayCommand<object>(obj =>
+                {
+                    var temp = selectedOrders.Count;
+
+                    if (Message.Show("Внимание", $"Удалить {temp} шт. объектов? Удаление произойдет только из отчета, в базе данных изменений не произойдет", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    {
+                        foreach (var t in selectedOrders)
+                        {
+                            UsersWorks.Remove(t);
+                        }
+                    }
+                });
+            }
+        }
+
+        /// <summary>
         /// команда изменения данных в выбранном объекте
         /// </summary>
         public ICommand ChangeWork => new RelayCommand<object>(obj =>

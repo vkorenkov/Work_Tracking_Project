@@ -35,6 +35,11 @@ ul{
     text-align: left;
 }
 
+li-printers {
+    color: goldenrod;
+    text-align: right;
+}
+
 ol{
     color: goldenrod;
     text-align: left;
@@ -45,7 +50,70 @@ ol{
     background-color: #1d1d1d;
 }
 
-.container{
+.button {
+    padding: 8px;
+    color: white;
+    border: 2px solid goldenrod;
+    border-radius: 5px;
+}
+
+input[type=submit] {
+    padding: 8px;
+    color: white;
+    border: 2px solid goldenrod;
+    background: #1d1d1d;
+    border-radius: 5px;
+}
+
+input[type=file]{
+    color: white;
+    border: 2px solid goldenrod;
+    background: #1d1d1d;
+    border-radius: 5px;
+}
+
+input[type=text] {
+    min-width: 200px;
+    color: white;
+    border: 2px solid goldenrod;
+    background: #1d1d1d;
+    border-radius: 5px;
+}
+
+input[type=checkbox] {
+    position: relative;
+    cursor: pointer;
+}
+
+    input[type=checkbox]:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 0;
+        left: 0;
+        border: 2px solid goldenrod;
+        border-radius: 3px;
+        background-color: #1d1d1d;
+    }
+
+    input[type=checkbox]:checked:after {
+        content: "";
+        display: block;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+        position: absolute;
+        top: 2px;
+        left: 6px;
+    }
+
+.container {
     max-width: 1200px;
     margin-right: auto;
     margin-left: auto;
@@ -111,6 +179,13 @@ ol{
     flex-wrap: wrap;
 }
 
+.manual-flex-no-wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+}
+
 .manual-block{
     flex: 1 50%;
     justify-content: center;
@@ -152,6 +227,7 @@ ol{
 /*Fotter*/
 .footer{
     margin-top: 40px;
+    border-top: 2px solid gray;
 }
 
 /*Details*/
@@ -174,6 +250,10 @@ ol{
 
 .yellow-clr {
     color: yellow; /* Цвет текста */
+}
+
+.goldenrod-clr {
+    color: goldenrod; /* Цвет текста */
 }
 
 .blue-clr {

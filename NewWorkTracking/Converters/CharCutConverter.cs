@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
@@ -14,8 +15,16 @@ namespace NewWorkTracking.Converters
     /// </summary>
     class CharCutConverter : IValueConverter
     {
+        private int _minStringLenght = 10;
+        private int _maxStringLenght = 12;
+
+        char[] symbols = new char[] { ' ', ',', '.', '?', '/', '\\', '-', '=', '_', '+', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '<', '>', '~', ';', ':' };
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if(value != null)
+                value = value.ToString().Trim(symbols);
+
             return value;
         }
 
@@ -29,28 +38,35 @@ namespace NewWorkTracking.Converters
         /// <returns></returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!string.IsNullOrEmpty(value.ToString()) && value.ToString().Length >= 10)
+            var tempSymbols = @"^[a-zA-Zа-яА-Я0-9]+$";
+            //var tempLenght = @"^(.{10}|.{12})$";
+
+            if (!string.IsNullOrWhiteSpace(value.ToString()) && !Regex.IsMatch(value.ToString(), tempSymbols))
             {
-                char[] symbols = new char[] { ' ', ',', '.', '?', '/', '\\', '-', '=', '_', '+', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '<', '>', '~', ';', ':' };
+                Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать только буквы и цифры. Специальные символы будут удалены. Проверте правильность инвентарного номера.", MessageBoxButton.OK);
 
                 foreach (var t in symbols)
                 {
                     if (value.ToString().Contains(t))
                     {
-                        Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать только буквы и цифры", MessageBoxButton.OK);
-
-                        return null;
+                        if (value != null)
+                            value = value.ToString().Remove(value.ToString().IndexOf(t), 1);
                     }
                 }
-
-                return value;
             }
-            else
+
+            if (/*!Regex.IsMatch(value.ToString(), tempLenght)*/ value.ToString().Length < _minStringLenght || value.ToString().Length > _maxStringLenght)
             {
-                Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать от 10 до 12 символов", MessageBoxButton.OK);
+                Message.Show("Ошибка заполнения", "Инвентарный номер должен содержать от 10 до 12 символов. Введите инвентарный номер снова.", MessageBoxButton.OK);
 
-                return null;
+                value = null;
+
+                //if (value != null && value.ToString().Length > 12)
+                //    //value = value.ToString().Remove(_maxStringLenght);
+                //    value = null;
             }
+
+            return value;
         }
     }
 }

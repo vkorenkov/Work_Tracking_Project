@@ -505,7 +505,7 @@
                     <TextBlock
                         Text="{Binding MainObject.Access.Name}"
                         FontFamily="Arial Bold"
-                        Visibility="{Binding Path=NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{Binding Path=NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}"/>
 
                     <TextBlock
                         Text="Осп выполнения работ"
@@ -513,17 +513,27 @@
 
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.OspList}"
-                        Text="{Binding NewWork.OspWork}"
-                        DisplayMemberPath="Name" />
+                        SelectedValue="{Binding NewWork.OspWork}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+                        <inter:Interaction.Behaviors>
+                            <behaviors:ComboboxBehavior />
+                        </inter:Interaction.Behaviors>
+                    </ComboBox>
 
                     <TextBlock
                         Text="Осп заказчика"
                         Margin="0 5 0 5" />
 
                     <ComboBox
-                        ItemsSource="{Binding MainObject.ComboBox.OspList}"
-                        Text="{Binding NewWork.OspOrder}"
-                        DisplayMemberPath="Name" />
+                        ItemsSource="{Binding OspOrderList}"
+                        SelectedValue="{Binding NewWork.OspOrder}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+                        <inter:Interaction.Behaviors>
+                            <behaviors:ComboboxBehavior />
+                        </inter:Interaction.Behaviors>
+                    </ComboBox>
 
                     <TextBlock
                         Text="Тип заявки"
@@ -553,8 +563,7 @@
                         Margin="0 5 0 5" />
 
                     <TextBox
-                        Text="{Binding NewWork.OldInv, Converter={StaticResource CharCutConverter}}"
-                        MaxLength="12" />
+                        Text="{Binding NewWork.OldInv, Converter={StaticResource CharCutConverter}}" />
 
                     <TextBlock
                         Text="Инвентарный номер нового устройства"
@@ -563,8 +572,7 @@
                     <DockPanel>
                         <TextBox
                             Width="200"
-                            Text="{Binding NewWork.NewInv, Converter={StaticResource CharCutConverter}}"
-                            MaxLength="12" />
+                            Text="{Binding NewWork.NewInv, Converter={StaticResource CharCutConverter}}" />
 
                         <CheckBox
                             HorizontalAlignment="Right"
@@ -594,8 +602,13 @@
 
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.OsTypeList}"
-                        Text="{Binding NewWork.OsType}"
-                        DisplayMemberPath="Name" />
+                        SelectedValue="{Binding NewWork.OsType}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+                        <inter:Interaction.Behaviors>
+                            <behaviors:ComboboxBehavior />
+                        </inter:Interaction.Behaviors>
+                    </ComboBox>
 
                     <TextBlock
                         Text="Причина обращения"
@@ -603,8 +616,13 @@
 
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.WhyList}"
-                        Text="{Binding NewWork.Why}"
-                        DisplayMemberPath="Name" />
+                        SelectedValue="{Binding NewWork.Why}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+                        <inter:Interaction.Behaviors>
+                            <behaviors:ComboboxBehavior />
+                        </inter:Interaction.Behaviors>
+                    </ComboBox>
 
                     <TextBlock
                         Text="Результат работ"
@@ -612,8 +630,13 @@
 
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.ResultsList}"
-                        Text="{Binding NewWork.Results}"
-                        DisplayMemberPath="Name" />
+                        SelectedValue ="{Binding NewWork.Results}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+                        <inter:Interaction.Behaviors>
+                            <behaviors:ComboboxBehavior />
+                        </inter:Interaction.Behaviors>
+                    </ComboBox>
 
                     <TextBlock
                         Text="Заявленная неисправность"
@@ -752,7 +775,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding AllWorksViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="False">
+            d:IsHidden="True">
 
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -1586,7 +1609,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding RepairsViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="True">
+            d:IsHidden="False">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
