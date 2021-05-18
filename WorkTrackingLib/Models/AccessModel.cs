@@ -25,6 +25,16 @@ namespace WorkTrackingLib.Models
             set { name = value; OnPropertyChanged(nameof(Name)); }
         }
 
+        private string scOks;
+        /// <summary>
+        /// Свойство имени сотрудника в БД
+        /// </summary>
+        public string ScOks
+        {
+            get { return scOks; }
+            set { scOks = value; OnPropertyChanged(nameof(ScOks)); }
+        }
+
         private int access;
         /// <summary>
         /// Свойство уровня доступа

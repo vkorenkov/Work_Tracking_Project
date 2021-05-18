@@ -56,13 +56,13 @@
             Margin="50 0 0 0"
             DataContext="{Binding AdministrateViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="True">
+            d:IsHidden="False">
 
             <Grid.RowDefinitions>
                 <RowDefinition
-                    Height="255*" />
+                    Height="304*" />
                 <RowDefinition
-                    Height="482*" />
+                    Height="431*" />
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -117,15 +117,15 @@
 
                 <TextBox
                     x:Name="AddNewItemTextBlock"
-                    Text="{Binding Item}"/>
+                    Text="{Binding Item}" />
 
                 <TextBlock
                     Text="Изменить выбранное"
-                    Margin="0 5 0 5"/>
+                    Margin="0 5 0 5" />
 
                 <TextBox
                     Text="{Binding SelectedItem.Name}"
-                    Margin="0 5 0 5"/>
+                    Margin="0 5 0 5" />
 
                 <DockPanel
                     HorizontalAlignment="Left">
@@ -247,69 +247,162 @@
                 Grid.Column="2">
 
                 <TextBlock
-                    Text="Добавить Пользователя"
-                    Margin="0 5 0 5" />
+                    Margin="0 5 0 5" ><Bold>Добавить пользователя</Bold></TextBlock>
 
-                <TextBlock
+                <DockPanel>
+
+                    <TextBlock
                     Text="Введите Ф.И.О"
-                    Margin="0 5 0 5" />
+                    Margin="0 5 74 5" />
 
-                <ComboBox
+                    <ComboBox
+                        MaxWidth="600"
                     x:Name="AddNewUserTextBox"
                     ItemsSource="{Binding UserList}"
                     Text="{Binding NewUser}">
 
-                    <ComboBox.InputBindings>
-                        <KeyBinding 
+                        <ComboBox.InputBindings>
+                            <KeyBinding
                             Key="enter"
-                            Command="{Binding SearchName}"/>
-                    </ComboBox.InputBindings>
+                            Command="{Binding SearchName}" />
+                        </ComboBox.InputBindings>
 
-                </ComboBox>
-
-                <TextBlock
-                    Text="Выберите уровень доступа"
-                    Margin="0 5 0 5" />
-
-                <ComboBox
-                    IsEditable="False"
-                    ItemsSource="{Binding AccessLevels}"
-                    SelectedItem="{Binding AccessLevel}">
-
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                Text="{Binding Converter={StaticResource AccsessConverter}}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-
-                </ComboBox>
-
-                <TextBlock
-                    Text="Изменить выбранное"
-                    Margin="0 5 0 5" />
+                    </ComboBox>
+                </DockPanel>
 
                 <DockPanel
-                    Margin="0 5 0 5">
-
-                    <TextBox
-                        Text="{Binding SelectedAdmin.Name}" />
+                    Margin="0 5 0 0">
+                    
+                    <TextBlock
+                    Text="Выберите уровень доступа"
+                    Margin="0 5 5 5" />
 
                     <ComboBox
+                        MaxWidth="600"
                         IsEditable="False"
                         ItemsSource="{Binding AccessLevels}"
-                        SelectedItem="{Binding SelectedAdmin.Access}">
+                        SelectedItem="{Binding AccessLevel}">
 
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock
-                                    Text="{Binding Converter={StaticResource AccsessConverter}}" />
+                                Text="{Binding Converter={StaticResource AccsessConverter}}" />
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
 
                     </ComboBox>
-
                 </DockPanel>
+
+                <DockPanel
+                    Margin="0 5 0 0">
+                    
+                    <TextBlock
+                        Text="Выберите Сц ОКС"
+                        Margin="0 5 55 5" />
+
+                    <ComboBox
+                        MaxWidth="600"
+                        IsEditable="False"
+                        ItemsSource="{Binding MainObject.ComboBox.ScOks}"
+                        Text="{Binding SelectedScOks}"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Name">
+
+                    </ComboBox>
+                </DockPanel>
+
+                <Border
+                    HorizontalAlignment="Stretch"
+                    Margin="0 5 0 0"
+                    BorderThickness="0 2 0 0"
+                    BorderBrush="DarkGray" 
+                    VerticalAlignment="Center"/>
+
+                <TextBlock
+                        Margin="0 5 0 5"><Bold>Изменить выбранного пользователя</Bold></TextBlock>
+
+                <StackPanel>
+
+                    <DockPanel
+                        Margin="0 5 0 5">
+
+                        <TextBlock 
+                            Margin="0 0 66 0"
+                            Text="Измените Ф.И.О"/>
+
+                        <TextBox
+                            MaxWidth="600"
+                            MinWidth="150"
+                            Height="20"
+                            Text="{Binding SelectedAdmin.Name}">
+                            <TextBox.ToolTip>
+                                <ToolTip
+                                    Background="#1d1d1d">
+                                    Ф.И.О
+                                </ToolTip>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                    </DockPanel>
+
+                    <DockPanel/>
+
+                    <DockPanel>
+
+                        <TextBlock 
+                            Margin="0 0 6 0"
+                            Text="Измените уровень доступа"/>
+
+                        <ComboBox
+                            MaxWidth="600"
+                            MinWidth="150"
+                            IsEditable="False"
+                            ItemsSource="{Binding AccessLevels}"
+                            SelectedItem="{Binding SelectedAdmin.Access}">
+
+                            <ComboBox.ToolTip>
+                                <ToolTip
+                                    Background="#1d1d1d">
+                                    Уровень доступа
+                                </ToolTip>
+                            </ComboBox.ToolTip>
+
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock
+                                        Text="{Binding Converter={StaticResource AccsessConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+
+                        </ComboBox>
+                    </DockPanel>
+
+                    <DockPanel
+                        Margin="0 5 0 5">
+
+                        <TextBlock
+                            Margin="0 0 57 0"
+                            Text="Измените Сц ОКС"/>
+
+                        <ComboBox
+                            MaxWidth="600"
+                            MinWidth="150"
+                            IsEditable="False"
+                            ItemsSource="{Binding MainObject.ComboBox.ScOks}"
+                            SelectedValue="{Binding SelectedAdmin.ScOKS}"
+                            DisplayMemberPath="Name"
+                            SelectedValuePath="Name">
+
+                            <ComboBox.ToolTip>
+                                <ToolTip
+                                    Background="#1d1d1d">
+                                    СЦ ОКС
+                                </ToolTip>
+                            </ComboBox.ToolTip>
+
+                        </ComboBox>
+                    </DockPanel>
+
+                </StackPanel>
 
                 <DockPanel
                     HorizontalAlignment="Left">
@@ -428,6 +521,14 @@
                                 <DockPanel>
                                     <TextBlock
                                         Foreground="{StaticResource GoldenBrush}"
+                                        Text="Сц Окс: " />
+                                    <TextBlock
+                                        Text="{Binding ScOKS}"
+                                        FontSize="13" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock
+                                        Foreground="{StaticResource GoldenBrush}"
                                         Text="Доступ: " />
                                     <TextBlock
                                         Text="{Binding Access, Converter={StaticResource AccsessConverter}}" />
@@ -505,7 +606,7 @@
                     <TextBlock
                         Text="{Binding MainObject.Access.Name}"
                         FontFamily="Arial Bold"
-                        Visibility="{Binding Path=NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        Visibility="{Binding Path=NamesVisibilityCheck, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <TextBlock
                         Text="Осп выполнения работ"
@@ -630,7 +731,7 @@
 
                     <ComboBox
                         ItemsSource="{Binding MainObject.ComboBox.ResultsList}"
-                        SelectedValue ="{Binding NewWork.Results}"
+                        SelectedValue="{Binding NewWork.Results}"
                         DisplayMemberPath="Name"
                         SelectedValuePath="Name">
                         <inter:Interaction.Behaviors>
@@ -995,6 +1096,12 @@
                             ElementStyle="{StaticResource Wrap}" />
 
                         <DataGridTextColumn
+                            Header="СцОкс"
+                            Binding="{Binding ScOks}"
+                            Width="160"
+                            ElementStyle="{StaticResource Wrap}" />
+
+                        <DataGridTextColumn
                             Header="ОСП выполнения"
                             Binding="{Binding OspWork}"
                             Width="130"
@@ -1281,6 +1388,25 @@
                                     Margin="0 0 0 10">
 
                                     <TextBlock
+                                        Text="Сц Окс"
+                                        FontSize="15"
+                                        Margin="10 0 0 0"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left" />
+
+                                    <ComboBox
+                                        Text="{Binding SelectedOrder.ScOks}"
+                                        ItemsSource="{Binding MainObject.ComboBox.ScOks}"
+                                        DisplayMemberPath="Name"
+                                        Width="200"
+                                        HorizontalAlignment="Right" />
+
+                                </DockPanel>
+
+                                <DockPanel
+                                    Margin="0 0 0 10">
+
+                                    <TextBlock
                                         Text="ОСП выполнения"
                                         FontSize="15"
                                         Margin="10 0 0 0"
@@ -1424,18 +1550,6 @@
                                         HorizontalAlignment="Right" />
 
                                 </DockPanel>
-
-                                <StackPanel
-                                    VerticalAlignment="Bottom"
-                                    Orientation="Horizontal">
-
-                                    <Button
-                                        Margin="10 0 0 0"
-                                        IsEnabled="True"
-                                        Content="Записать"
-                                        Command="{Binding ChangeWork}" />
-
-                                </StackPanel>
 
                             </StackPanel>
 
@@ -1593,6 +1707,19 @@
 
                                 </DockPanel>
 
+                                <StackPanel
+                                    VerticalAlignment="Bottom"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+
+                                    <Button
+                                        Margin="10 10 0 0"
+                                        IsEnabled="True"
+                                        Content="Записать"
+                                        Command="{Binding ChangeWork}" />
+
+                                </StackPanel>
+
                             </StackPanel>
 
                         </Grid>
@@ -1609,7 +1736,7 @@
             Margin="50 0 0 0"
             DataContext="{Binding RepairsViewModel}"
             Visibility="{Binding ActiveVisibility}"
-            d:IsHidden="False">
+            d:IsHidden="True">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -1797,6 +1924,7 @@
                     VerticalAlignment="Center" />
 
                 <DataGrid
+                    x:Name="RepairsDataGrid"
                     BorderThickness="0.5"
                     AutoGenerateColumns="False"
                     CanUserAddRows="False"
@@ -1815,7 +1943,9 @@
 
                             <MenuItem
                                 Header="Выгрузить выделенное в Excel (пока недоступно)"
-                                IsEnabled="False"
+                                IsEnabled="True"
+                                CommandParameter="{Binding PlacementTarget.SelectedItems, 
+                                RelativeSource={RelativeSource FindAncestor,AncestorType=ContextMenu}}"
                                 Command="{Binding GetExcel}" />
 
                             <MenuItem
@@ -1923,9 +2053,9 @@
                         </Style>
                     </DataGrid.CellStyle>-->
 
-                    <inter:Interaction.Behaviors>
+                    <!--<inter:Interaction.Behaviors>
                         <behaviors:DataGridBehavior />
-                    </inter:Interaction.Behaviors>
+                    </inter:Interaction.Behaviors>-->
 
                     <DataGrid.Columns>
 
@@ -1974,7 +2104,7 @@
                         <DataGridTextColumn
                             Visibility="{Binding (FrameworkElement.DataContext).HideColumns.SNumber, 
                             RelativeSource={x:Static RelativeSource.Self}, Converter={StaticResource BoolToVisibilityConverter}}"
-                            Header="Серийный нномер"
+                            Header="Серийный номер"
                             Binding="{Binding SNumber}"
                             ElementStyle="{StaticResource Wrap}" />
 
@@ -2169,6 +2299,7 @@
                                             HorizontalAlignment="Left" />
 
                                         <ComboBox
+                                            Name="osType"
                                             Width="200"
                                             Margin="80 0 0 0"
                                             ItemsSource="{Binding MainObject.ComboBox.OsTypeList}"
@@ -2297,17 +2428,45 @@
 
                                     </DockPanel>
 
-                                    <StackPanel
-                                        VerticalAlignment="Bottom"
-                                        Orientation="Horizontal"
-                                        Grid.Row="1">
+                                    <DockPanel
+                                        Margin="0 0 0 10">
 
-                                        <Button
-                                            Content="Записать"
+                                        <DockPanel.Resources>
+                                            <Style
+                                                TargetType="DockPanel">
+                                                <Setter
+                                                    Property="Visibility"
+                                                    Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ElementName=osType, Path=Text}"
+                                                        Value="Терминалы сбора данных">
+                                                        <Setter
+                                                            Property="Visibility"
+                                                            Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DockPanel.Resources>
+
+                                        <CheckBox
                                             Margin="20 0 0 0"
-                                            Command="{Binding ChangeRepair}" />
+                                            Content="Аккумулятор"
+                                            IsChecked="{Binding SelectedRepair.HaveAccumulator}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Карта памяти"
+                                            IsChecked="{Binding SelectedRepair.HaveFlashMemory}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Ремешок"
+                                            IsChecked="{Binding SelectedRepair.HaveHandBelt}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Стилус"
+                                            IsChecked="{Binding SelectedRepair.HaveStylus}" />
 
-                                    </StackPanel>
+                                    </DockPanel>
 
                                 </StackPanel>
 
@@ -2488,10 +2647,25 @@
                                                 Content="Гарантийный ремонт" />
                                             <ComboBoxItem
                                                 Content="Платный ремонт" />
+                                            <ComboBoxItem
+                                                Content="Сервисный контракт" />
 
                                         </ComboBox>
 
                                     </DockPanel>
+
+                                    <StackPanel
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal"
+                                        Grid.Row="1">
+
+                                        <Button
+                                            Content="Записать"
+                                            Margin="20 0 0 0"
+                                            Command="{Binding ChangeRepair}" />
+
+                                    </StackPanel>
 
                                 </StackPanel>
                             </Grid>
@@ -2584,8 +2758,8 @@
                 <Button
                     Command="{Binding OpenCleanRepairCard}">
                     <TextBlock
-                        Text="Добавить ремонт" 
-                        FontSize="10"/>
+                        Text="Добавить ремонт"
+                        FontSize="10" />
                 </Button>
 
             </StackPanel>
@@ -2938,6 +3112,7 @@
                                             HorizontalAlignment="Left" />
 
                                         <ComboBox
+                                            Name="osTypeDevice"
                                             Width="200"
                                             Margin="80 0 0 0"
                                             ItemsSource="{Binding MainObject.ComboBox.OsTypeList}"
@@ -3066,17 +3241,45 @@
 
                                     </DockPanel>
 
-                                    <StackPanel
-                                        VerticalAlignment="Bottom"
-                                        Orientation="Horizontal"
-                                        Grid.Row="1">
+                                    <DockPanel
+                                        Margin="0 0 0 10">
 
-                                        <Button
-                                            Content="Записать"
+                                        <DockPanel.Resources>
+                                            <Style
+                                                TargetType="DockPanel">
+                                                <Setter
+                                                    Property="Visibility"
+                                                    Value="Hidden" />
+                                                <Style.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding ElementName=osTypeDevice, Path=Text}"
+                                                        Value="Терминалы сбора данных">
+                                                        <Setter
+                                                            Property="Visibility"
+                                                            Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DockPanel.Resources>
+
+                                        <CheckBox
                                             Margin="20 0 0 0"
-                                            Command="{Binding ChangeRepair}" />
+                                            Content="Аккумулятор"
+                                            IsChecked="{Binding SelectedRepair.HaveAccumulator}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Карта памяти"
+                                            IsChecked="{Binding SelectedRepair.HaveFlashMemory}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Ремешок"
+                                            IsChecked="{Binding SelectedRepair.HaveHandBelt}" />
+                                        <CheckBox
+                                            Margin="20 0 0 0"
+                                            Content="Стилус"
+                                            IsChecked="{Binding SelectedRepair.HaveStylus}" />
 
-                                    </StackPanel>
+                                    </DockPanel>
 
                                 </StackPanel>
 
@@ -3257,10 +3460,25 @@
                                                 Content="Гарантийный ремонт" />
                                             <ComboBoxItem
                                                 Content="Платный ремонт" />
+                                            <ComboBoxItem
+                                                Content="Сервисный контракт" />
 
                                         </ComboBox>
 
                                     </DockPanel>
+
+                                    <StackPanel
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal"
+                                        Grid.Row="1">
+
+                                        <Button
+                                            Content="Записать"
+                                            Margin="20 0 0 0"
+                                            Command="{Binding ChangeRepair}" />
+
+                                    </StackPanel>
 
                                 </StackPanel>
                             </Grid>

@@ -85,7 +85,13 @@ namespace NewWorkTracking.ViewModels
         public Admins SelectedAdmin
         {
             get => selectedAdmin;
-            set { selectedAdmin = value; OnPropertyChanged(nameof(SelectedAdmin)); if (SelectedAdmin != null) selectedAdminCopy = (Admins)SelectedAdmin.Clone(); }
+            set
+            {
+                selectedAdmin = value;
+                if (SelectedAdmin != null)
+                    selectedAdminCopy = (Admins)SelectedAdmin.Clone();
+                OnPropertyChanged(nameof(SelectedAdmin));
+            }
         }
 
         private int accessLevel;
@@ -96,6 +102,16 @@ namespace NewWorkTracking.ViewModels
         {
             get => accessLevel;
             set { accessLevel = value; OnPropertyChanged(nameof(AccessLevel)); }
+        }
+
+        private string selectedScOks;
+        /// <summary>
+        /// Свойство уровня доступа
+        /// </summary>
+        public string SelectedScOks
+        {
+            get => selectedScOks;
+            set { selectedScOks = value; OnPropertyChanged(nameof(SelectedScOks)); }
         }
 
         private string newUser;
@@ -144,7 +160,7 @@ namespace NewWorkTracking.ViewModels
                 if (Message.Show("Внимание", $@"Добавить нового пользователя с Ф.И.О ""{NewUser}"" и уровнем доступа ""{AccessLevel}""?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     // Отправка запроса и объекта нового пользователя на сервер
-                    ConnectionClass.hubConnection.InvokeAsync("RunAddNewUser", new Admins() { Name = NewUser, Access = AccessLevel });
+                    ConnectionClass.hubConnection.InvokeAsync("RunAddNewUser", new Admins() { Name = NewUser, Access = AccessLevel, ScOKS = SelectedScOks });
 
                     // Очистка строки нового пользователя
                     NewUser = string.Empty;
@@ -180,7 +196,8 @@ namespace NewWorkTracking.ViewModels
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     // Отправка запроса и измененного объекта пользователя на сервер
-                    ConnectionClass.hubConnection.InvokeAsync("StartChangeUser", new Admins() { Id = SelectedAdmin.Id, Name = SelectedAdmin.Name, Access = SelectedAdmin.Access });
+                    //var admin = new Admins() { Id = SelectedAdmin.Id, Name = SelectedAdmin.Name, Access = SelectedAdmin.Access, ScOKS = SelectedAdmin.ScOKS };
+                    ConnectionClass.hubConnection.InvokeAsync("StartChangeUser", SelectedAdmin);
                 }
                 else
                 {

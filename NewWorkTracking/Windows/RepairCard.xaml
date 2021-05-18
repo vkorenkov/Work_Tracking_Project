@@ -10,8 +10,8 @@
     Title="{Binding Repair.InvNumber}"
     Name="RepairCardWindow"
     Style="{DynamicResource WindowStyle}"
-    Height="422.328"
-    Width="800"
+    Height="464.328"
+    Width="858"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen">
 
@@ -35,9 +35,9 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition
-                Width="127*" />
+                Width="399*" />
             <ColumnDefinition
-                Width="137*" />
+                Width="451*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel
@@ -80,6 +80,7 @@
                     Margin="20 0 0 0"
                     VerticalAlignment="Center" />
                 <ComboBox
+                    Name="osType"
                     Width="200"
                     Margin="80 0 0 0"
                     ItemsSource="{Binding MainObject.ComboBox.OsTypeList}"
@@ -121,12 +122,12 @@
                     Text="Инвентарный номер"
                     Margin="20 0 0 0"
                     VerticalAlignment="Center" />
-                
+
                 <TextBox
                     Width="200"
                     Margin="5 0 0 0"
                     Text="{Binding Repair.InvNumber, Converter={StaticResource CharCutConverter}}"
-                    MaxLength="12"/>
+                    MaxLength="12" />
 
             </DockPanel>
 
@@ -189,6 +190,47 @@
                     Width="200"
                     Margin="63 0 0 0"
                     Text="{Binding Repair.KaRepair}" />
+
+            </DockPanel>
+
+            <DockPanel
+                Margin="0 10 0 10">
+
+                <DockPanel.Resources>
+                    <Style
+                        TargetType="DockPanel">
+                        <Setter
+                            Property="Visibility"
+                            Value="Hidden" />
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding ElementName=osType, Path=Text}"
+                                Value="Терминалы сбора данных">
+                                <Setter
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DockPanel.Resources>
+
+
+                <CheckBox
+                    Margin="20 0 0 0"
+                    Content="Аккумулятор"
+                    IsChecked="{Binding Repair.HaveAccumulator}" />
+                <CheckBox
+                    Margin="20 0 0 0"
+                    Content="Карта памяти"
+                    IsChecked="{Binding Repair.HaveFlashMemory}" />
+                <CheckBox
+                    Margin="20 0 0 0"
+                    Content="Ремешок"
+                    IsChecked="{Binding Repair.HaveHandBelt}" />
+                <CheckBox
+                    Margin="20 0 0 0"
+                    Content="Стилус"
+                    IsChecked="{Binding Repair.HaveStylus}" />
 
             </DockPanel>
 
@@ -357,6 +399,8 @@
                         Content="Гарантийный ремонт" />
                     <ComboBoxItem
                         Content="Платный ремонт" />
+                    <ComboBoxItem
+                        Content="Сервисный контракт" />
 
                 </ComboBox>
 

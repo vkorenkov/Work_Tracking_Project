@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using System.Windows.Input;
 using WorkTrackingLib.ProcessClasses;
 using System.Drawing;
+using System.Collections.ObjectModel;
 
 namespace NewWorkTracking.ViewModels
 {
@@ -53,6 +54,13 @@ namespace NewWorkTracking.ViewModels
         {
             get => selectedRepair;
             set { selectedRepair = value; OnPropertyChanged(nameof(SelectedRepair)); }
+        }
+
+        private ObservableCollection<RepairClass> selectedRepairs;
+        public ObservableCollection<RepairClass> SelectedRepairs
+        {
+            get => selectedRepairs;
+            set { selectedRepairs = value; OnPropertyChanged(nameof(SelectedRepairs)); }
         }
 
         private Dispatcher dispatcher;
@@ -128,6 +136,35 @@ namespace NewWorkTracking.ViewModels
             CreateHidenColumns();
         });
 
+        public ICommand GetExcel => new RelayCommand<object>(obj =>
+        {
+            var tempItems = (System.Collections.IList)obj;
+
+            SelectedRepairs = new ObservableCollection<RepairClass>(tempItems?.Cast<RepairClass>());
+
+            SaveOpenFile saveOpen = new SaveOpenFile();
+
+            string fileName = AllWorksViewModel.GetFileName(Filter.DateOne, Filter.DateTwo);
+
+            string path = saveOpen.SaveDialog(fileName);
+
+            if (SelectedRepairs.Count <= 2)
+            {
+                if (Filter.DateOne != null || Filter.DateTwo != null)
+                {
+                    ExcelUsage.GetExcel(UsersWorks.Cast<RepairClass>().ToList(), path);
+
+                    return;
+                }
+
+                ExcelUsage.GetExcel(MainObject.Repairs.ToList(), path);
+            }
+            else
+            {
+                ExcelUsage.GetExcel(SelectedRepairs.ToList(), path);
+            }
+        });
+
         public RepairsViewModel(MainObject mainObject)
         {
             SignalRActions();
@@ -201,7 +238,7 @@ namespace NewWorkTracking.ViewModels
                     col.SetValue(FrameworkElement.DataContextProperty, e.NewValue);
                 }
             }
-        }        
+        }
 
         private void GetFiltersLists()
         {

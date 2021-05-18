@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>WorkTrackingSite</AssemblyName>
+    <UserSecretsId>71287048-a5c4-41c1-85f5-372a716cd8b8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,6 @@
     <Folder Include="wwwroot\CurrentVersion\2.0.6.6\" />
     <Folder Include="wwwroot\img\MainSkySearcher\" />
     <Folder Include="wwwroot\img\MainInstallPrinters\" />
-    <Folder Include="wwwroot\Update\" />
     <Folder Include="wwwroot\ExcelExample\" />
     <Folder Include="wwwroot\CurrentVersionSkySearcher\" />
     <Folder Include="wwwroot\CurrentVersionInstallPrinters\" />

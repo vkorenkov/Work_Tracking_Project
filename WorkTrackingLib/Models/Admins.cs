@@ -24,6 +24,11 @@ namespace WorkTrackingLib.Models
         public int Access { get; set; }
 
         /// <summary>
+        /// Свойство СцОКС системного администратора
+        /// </summary>
+        public string ScOKS { get; set; }
+
+        /// <summary>
         /// Метод реализует интерфейс клонирования объекта
         /// </summary>
         /// <returns></returns>

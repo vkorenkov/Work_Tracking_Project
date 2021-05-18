@@ -66,6 +66,8 @@ namespace NewWorkTracking.ViewModels
         {
             NewWork.Who = MainObject.Access.Name;
 
+            NewWork.ScOks = string.IsNullOrEmpty(MainObject.Access.ScOks) ? "Не заполнено" : MainObject.Access.ScOks;
+
             var tempListProp = ChechForEmpty(NewWork);
 
             if (tempListProp.Count <= 0)
@@ -120,8 +122,15 @@ namespace NewWorkTracking.ViewModels
             MainObject = mainObject;
             OspOrderList = new List<Osp>(MainObject.ComboBox.OspList);
             UsersWorks = new ListCollectionView(MainObject.AdminWorks.Where(x => x.Who == MainObject.Access.Name).ToList());
+            string scOks = MainObject.Access.ScOks;
             NewWork = new NewWrite();
-            NewWork.Date = DateTime.Today;
+
+            if (string.IsNullOrWhiteSpace(scOks))
+                NewWork.ScOks = "Не указана";
+            else
+                NewWork.ScOks = scOks;
+
+                NewWork.Date = DateTime.Today;
         }
 
         protected override void SignalRActions()
@@ -229,6 +238,7 @@ namespace NewWorkTracking.ViewModels
             ConnectionClass.hubConnection.InvokeAsync("RunAddRepair", new RepairClass()
             {
                 Date = DateTime.Now,
+                ScOks = MainObject.Access.ScOks,
                 DiagNumber = newWork.OrderNum,
                 InvNumber = newWork.OldInv,
                 OsName = newWork.OsType,

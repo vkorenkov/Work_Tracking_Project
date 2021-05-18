@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace WorkTrackingLib
 {
@@ -41,6 +35,17 @@ namespace WorkTrackingLib
         {
             get { return who; }
             set { who = value; OnPropertyChanged(nameof(Who)); }
+        }
+
+        private string scOks;
+        [Display(Name = "Сц Окс")]
+        /// <summary>
+        /// Свойство заполнения Сервисного центра ОКС
+        /// </summary>
+        public string ScOks
+        {
+            get { return scOks; }
+            set { scOks = value; OnPropertyChanged(nameof(ScOks)); }
         }
 
         private string ospWork;

@@ -83,6 +83,7 @@
     <Compile Include="Models\Results.cs" />
     <Compile Include="Models\ScOks.cs" />
     <Compile Include="Models\Why.cs" />
+    <Compile Include="ProcessClasses\NotForUserData.cs" />
     <Compile Include="ProcessClasses\PropertyChangeClass.cs" />
     <Compile Include="Models\NewWrite.cs" />
     <Compile Include="ProcessClasses\RelayCommand.cs" />

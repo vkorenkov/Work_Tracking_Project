@@ -32,6 +32,9 @@ namespace WorkTracking_Server.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ScOKS")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.ToTable("Admins");
@@ -112,6 +115,18 @@ namespace WorkTracking_Server.Migrations
 
                     b.Property<string>("HandedOver")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("HaveAccumulator")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HaveFlashMemory")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HaveHandBelt")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("HaveStylus")
+                        .HasColumnType("bit");
 
                     b.Property<string>("InvNumber")
                         .HasColumnType("nvarchar(max)");
@@ -273,6 +288,9 @@ namespace WorkTracking_Server.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Results")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ScOks")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Who")

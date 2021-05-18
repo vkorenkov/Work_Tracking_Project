@@ -11,6 +11,8 @@ namespace WorkTracking_Server.Context
 {
     public class DataContext : DbContext
     {
+        Dictionary<string, SqlConnectionString> connections;
+
         public DbSet<NewWrite> ComplitedWorks { get; set; }
 
         public DbSet<RepairClass> Repairs { get; set; }
@@ -33,25 +35,14 @@ namespace WorkTracking_Server.Context
 
         public DataContext()
         {
+            connections = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, SqlConnectionString>>(System.IO.File.ReadAllText(@"wwwroot\SqlConnectionString.json"));
+
             Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optBuilder)
         {
-            //optBuilder.UseSqlServer(
-            //    @"Server=SKY-244\OKS_SQL;
-            //    DataBase=PassYourWork;
-            //    Integrated Security=True");
-
-            optBuilder.UseSqlServer(
-                @"Server=SKY-244\OKS_SQL;
-                DataBase=TestWorkTracking;
-                Integrated Security=True");
-
-            //optBuilder.UseSqlServer(
-            //    @"Server=(localdb)\MSSQLLocalDB;
-            //    DataBase=PassYourWork;
-            //    Integrated Security=True");
+            optBuilder.UseSqlServer(connections["test"].ConnectionString);
         }
     }
 }

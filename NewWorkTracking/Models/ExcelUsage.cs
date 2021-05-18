@@ -43,23 +43,23 @@ namespace NewWorkTracking.Models
                     ws.Column("A").Delete();
 
                     // Получение свойств объекта для извлечения атрибутов
-                    var t = temp[0].GetType().GetProperties().ToList();
+                    var t = temp.FirstOrDefault().GetType().GetProperties().ToList();
 
                     // Цикл получения свойст и установки заголовков столбцов
                     for (var i = 1; i < t.Count; i++)
                     {
                         // Условие извлекает пользовательские атрибуты свойств если они не пустые
-                        if (t[i].GetCustomAttribute(typeof(DisplayAttribute)) != null)
+                        if (t[i].GetCustomAttribute<DisplayAttribute>() != null)
                         {
                             // Запись в ячейки заголовков извлеченных атрибутов свойст
-                            ws.Cell(1, i).SetValue((t[i].GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute).Name);
+                            ws.Cell(1, i).SetValue(t[i].GetCustomAttribute<DisplayAttribute>().Name);
                         }
                     }
 
                     // Установка ширины ячейки в соответствии с шириной текста
                     ws.Columns().AdjustToContents();
 
-                    // Отклучение автофильтра по умолчанию
+                    // Отключение автофильтра по умолчанию
                     ws.RangeUsed().SetAutoFilter(false);
 
                     // Сохранение файла
@@ -80,6 +80,71 @@ namespace NewWorkTracking.Models
                 // Указание результата выполнение действий с файлом при ошибке сохранения
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Метод выгрузки данных в файл Excel
+        /// </summary>
+        public static bool GetExcel(List<RepairClass> repairsList, string path)
+        {
+            // Условие для сохранения файла
+            if (!string.IsNullOrWhiteSpace(path) && repairsList != null)
+            {
+                // Создание новой книги Exel
+                var wb = new XLWorkbook();
+
+                // Инициализация интерфейса добавления данных в файл Exel
+                var ws = wb.Worksheets.Add("Data");
+
+                // Запись данных в файл Exel
+                ws.Cell(1, 1).InsertTable(repairsList);
+
+                // Удаление колонок с ненужной пользователю информацией
+                ws.Column("B").Delete();
+                ws.Column("A").Delete();
+
+                // Получение свойств объекта для извлечения атрибутов
+                var repairAttributes = repairsList.FirstOrDefault().GetType().GetProperties().ToList();
+
+                repairAttributes.RemoveAll(x => x.GetCustomAttribute<DisplayAttribute>() == null);
+
+                // Цикл получения свойст и установки заголовков столбцов
+                for (var i = 0; i < repairAttributes.Count; i++)
+                {
+                    // Запись в ячейки заголовков извлеченных атрибутов свойст
+                    ws.Cell(1, i + 1).SetValue(repairAttributes[i].GetCustomAttribute<DisplayAttribute>().Name);
+                }
+
+                // Установка ширины ячейки в соответствии с шириной текста
+                ws.Columns().AdjustToContents();
+
+                // Отключение автофильтра по умолчанию
+                ws.RangeUsed().SetAutoFilter(false);
+
+                try
+                {
+                    // Сохранение файла
+                    wb.SaveAs(path);
+
+                    // Указание результата выполнение действий с файлом при удачном сохранении
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    // Указание результата выполнение действий с файлом при ошибке сохранения
+                    throw new Exception(ex.Message);
+                }
+                finally
+                {
+                    wb.Dispose();
+                }
+            }
+            else
+            {
+                // Указание результата выполнение действий с файлом при отмене сохранения
+                return false;
+            }
+
         }
 
         /// <summary>
@@ -131,7 +196,11 @@ namespace NewWorkTracking.Models
                                     RepairBill = t.Cell(16).Value.ToString(),
                                     WarrantyBasis = t.Cell(17).Value.ToString(),
                                     StartWarranty = t.Cell(18).Value.GetType() != typeof(DateTime) ? new DateTime?() : Convert.ToDateTime(t.Cell(18).Value),
-                                    Warranty = t.Cell(19).Value.ToString()
+                                    Warranty = t.Cell(19).Value.ToString(),
+                                    HaveAccumulator = (bool)t.Cell(20).Value,
+                                    HaveFlashMemory = (bool)t.Cell(21).Value,
+                                    HaveHandBelt = (bool)t.Cell(22).Value,
+                                    HaveStylus = (bool)t.Cell(20).Value
                                 };
 
                                 emptyCol.Add(repairClass);

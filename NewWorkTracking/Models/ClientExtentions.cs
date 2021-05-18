@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using Newtonsoft.Json;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WorkTrackingLib;
 using WorkTrackingLib.Models;
 
 namespace NewWorkTracking.Models
@@ -159,6 +163,21 @@ namespace NewWorkTracking.Models
                     t.Close();
                 }
             }
+        }
+
+        public static INotifyCollectionChanged SelectionChanged(this INotifyCollectionChanged selectedItems, IList list)
+        {
+            ObservableCollection<object> tempCol = new ObservableCollection<object>();
+
+            foreach (var i in list)
+            {
+                if (i is NewWrite WriteItem)
+                    tempCol.Add(WriteItem);
+                else if (i is RepairCard RepairItem)
+                    tempCol.Add(RepairItem);
+            }
+
+            return tempCol;
         }
     }
 }

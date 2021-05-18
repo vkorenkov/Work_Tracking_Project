@@ -264,12 +264,20 @@ namespace NewWorkTracking.ViewModels
         /// <param name="dateOne"></param>
         /// <param name="dateTwo"></param>
         /// <returns></returns>
-        private string GetFileName(DateTime? dateOne, DateTime? dateTwo)
+        public static string GetFileName(DateTime? dateOne, DateTime? dateTwo)
         {
             if (dateOne != null && dateTwo != null)
             {
                 // Имя файла если даты были выбраны
-                return "Отчет " + dateOne.Value.ToString("dd.MM.yyyy") + " - " + dateTwo.Value.ToString("dd.MM.yyyy");
+                return $"Отчет {dateOne.Value.ToString("dd.MM.yyyy")} - {dateTwo.Value.ToString("dd.MM.yyyy")}";
+            }
+            else if(dateOne != null)
+            {
+                return $"отчет c {dateOne.Value.ToString("dd.MM.yyyy")} - {DateTime.Now.ToString("dd.MM.yyyy")}";
+            }
+            else if (dateTwo != null)
+            {
+                return $"отчет по {dateTwo.Value.ToString("dd.MM.yyyy")}";
             }
             else
             {

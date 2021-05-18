@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace WorkTrackingLib.Models
         }
 
         private DateTime? date;
+        [Display(Name = "Дата")]
         public DateTime? Date
         {
             get { return date; }
@@ -32,6 +34,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string status = string.Empty;
+        [Display(Name = "Статус")]
         public string Status
         {
             get { return status; }
@@ -39,6 +42,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string osName = string.Empty;
+        [Display(Name = "Наименование")]
         public string OsName
         {
             get { return osName; }
@@ -46,6 +50,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string model = string.Empty;
+        [Display(Name = "Модель")]
         public string Model
         {
             get { return model; }
@@ -53,6 +58,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string sNumber = string.Empty;
+        [Display(Name = "Серийный номер")]
         public string SNumber
         {
             get { return sNumber; }
@@ -60,6 +66,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string invNumber = string.Empty;
+        [Display(Name = "Инв.номер")]
         public string InvNumber
         {
             get { return invNumber; }
@@ -67,6 +74,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string diagNumber = string.Empty;
+        [Display(Name = "Основание")]
         public string DiagNumber
         {
             get { return diagNumber; }
@@ -74,6 +82,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string scOks = string.Empty;
+        [Display(Name = "СЦ ОКС")]
         public string ScOks
         {
             get => scOks;
@@ -81,6 +90,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string kaProvider = string.Empty;
+        [Display(Name = "КА Поставщик")]
         public string KaProvider
         {
             get { return kaProvider; }
@@ -88,6 +98,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string kaRepair = string.Empty;
+        [Display(Name = "КА Ремонт")]
         public string KaRepair
         {
             get { return kaRepair; }
@@ -95,6 +106,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string handedOver = string.Empty;
+        [Display(Name = "Передал")]
         public string HandedOver
         {
             get { return handedOver; }
@@ -102,6 +114,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string defect = string.Empty;
+        [Display(Name = "Неисправность")]
         public string Defect
         {
             get { return defect; }
@@ -109,6 +122,7 @@ namespace WorkTrackingLib.Models
         }
 
         private DateTime? shipmentDate;
+        [Display(Name = "Дата отгрузки")]
         public DateTime? ShipmentDate
         {
             get { return shipmentDate; }
@@ -116,6 +130,7 @@ namespace WorkTrackingLib.Models
         }
 
         private int daysOfRepair;
+        [Display(Name = "Дней в ремонте")]
         public int DaysOfRepair
         {
             get { return daysOfRepair; }
@@ -123,6 +138,7 @@ namespace WorkTrackingLib.Models
         }
 
         private DateTime? returnFromRepair;
+        [Display(Name = "Вернулось из ремонта")]
         public DateTime? ReturnFromRepair
         {
             get { return returnFromRepair; }
@@ -130,6 +146,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string providerOrder = string.Empty;
+        [Display(Name = "Номер заявки поставщика СЦ")]
         public string ProviderOrder
         {
             get { return providerOrder; }
@@ -137,6 +154,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string repairBill = string.Empty;
+        [Display(Name = "Согласованная стоимость ремонта")]
         public string RepairBill
         {
             get { return repairBill; }
@@ -144,6 +162,7 @@ namespace WorkTrackingLib.Models
         }
 
         private string warrantyBasis = string.Empty;
+        [Display(Name = "Основание гарантии")]
         public string WarrantyBasis
         {
             get { return warrantyBasis; }
@@ -151,6 +170,7 @@ namespace WorkTrackingLib.Models
         }
 
         private DateTime? startWarranty;
+        [Display(Name = "Дата начала гарантии")]
         public DateTime? StartWarranty
         {
             get { return startWarranty; }
@@ -158,10 +178,43 @@ namespace WorkTrackingLib.Models
         }
 
         private string warranty = string.Empty;
+        [Display(Name = "Тип ремонта")]
         public string Warranty
         {
             get { return warranty; }
             set { warranty = value; OnPropertyChanged(nameof(Warranty)); }
+        }
+
+        private bool haveAccumulator;
+        [Display(Name = "Аккумулятор")]
+        public bool HaveAccumulator
+        {
+            get => haveAccumulator;
+            set { haveAccumulator = value; OnPropertyChanged(nameof(HaveAccumulator)); }
+        }
+
+        private bool haveFlashMemory;
+        [Display(Name = "Карта памяти")]
+        public bool HaveFlashMemory
+        {
+            get => haveFlashMemory;
+            set { haveFlashMemory = value; OnPropertyChanged(nameof(HaveFlashMemory)); }
+        }
+
+        private bool haveHandBelt;
+        [Display(Name = "Ремешок")]
+        public bool HaveHandBelt
+        {
+            get => haveHandBelt;
+            set { haveHandBelt = value; OnPropertyChanged(nameof(HaveHandBelt)); }
+        }
+
+        private bool haveStylus;
+        [Display(Name = "Стилус")]
+        public bool HaveStylus
+        {
+            get => haveStylus;
+            set { haveStylus = value; OnPropertyChanged(nameof(HaveStylus)); }
         }
 
         private void ChangeDaysOfRepair()

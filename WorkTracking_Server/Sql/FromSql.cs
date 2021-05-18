@@ -73,7 +73,7 @@ namespace WorkTracking_Server.Sql
 
             if (tempUser != null)
             {
-                return new AccessModel() { Id = tempUser.Id, Name = tempUser.Name, Access = tempUser.Access };
+                return new AccessModel() { Id = tempUser.Id, Name = tempUser.Name, ScOks = tempUser.ScOKS, Access = tempUser.Access };
             }
             else
             {
@@ -85,12 +85,12 @@ namespace WorkTracking_Server.Sql
         {            
             ComboboxDataSource comboboxData = new ComboboxDataSource(
                 dataContext.Admins.Select(x => x.Name).ToList(),
-                dataContext.Osp.ToList(),
-                dataContext.OsType.ToList(),
-                dataContext.Results.ToList(),
-                dataContext.Why.ToList(),
-                dataContext.ScOks.ToList(),
-                dataContext.RepairsStatuses.ToList(),
+                dataContext.Osp.OrderBy(x => x.Name).ToList(),
+                dataContext.OsType.OrderBy(x => x.Name).ToList(),
+                dataContext.Results.OrderBy(x => x.Name).ToList(),
+                dataContext.Why.OrderBy(x => x.Name).ToList(),
+                dataContext.ScOks.OrderBy(x => x.Name).ToList(),
+                dataContext.RepairsStatuses.OrderBy(x => x.Name).ToList(),
                 new List<Admins>(dataContext.Admins));
 
             return comboboxData;

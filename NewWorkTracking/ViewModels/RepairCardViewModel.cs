@@ -34,9 +34,10 @@ namespace NewWorkTracking.ViewModels
             Repair = new RepairClass() 
             { 
                 Model = device.DeviceName, 
+                ScOks = device.Repairs[0].ScOks,
                 InvNumber = device.InvNumber, 
                 DeviceId = device.Id,
-                OsName = device.OsName,
+                OsName = device.OsName
             };
 
             if (device.Repairs.Count != 0)
