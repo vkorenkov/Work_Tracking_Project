@@ -79,7 +79,7 @@ namespace NewWorkTracking.ViewModels
             set { changeTextBoxVis = value; OnPropertyChanged(nameof(ChangeTextBoxVis)); }
         }
 
-        public ICommand ChouseMenu => new RelayCommand<object>(obj =>
+        public ICommand ChouseMenu => new RelayCommand<object>(async obj =>
         {
             switch (obj)
             {
@@ -92,7 +92,7 @@ namespace NewWorkTracking.ViewModels
                 case "Repeat":
                     ButtonsVis = Visibility.Collapsed;
                     ChangeTextBoxVis = Visibility.Collapsed;
-                    Task.Run(() => StartApp());
+                    await StartApp();
                     break;
             }
         });
@@ -116,7 +116,7 @@ namespace NewWorkTracking.ViewModels
                     }
                     else
                     {
-                        Status = $"Ошибка подключения к новому серверу. Проверьте введенные данные, сервер не будет изменен. Введенный вами сервер {NewServer}. Текущий сервер: {ConnectionClass.connectionPath.Server}";
+                        OutputCantConnection($"Ошибка подключения к новому серверу. Проверьте введенные данные, сервер не будет изменен. Введенный вами сервер {NewServer}. Текущий сервер: {ConnectionClass.connectionPath.Server}");
 
                         ControlEnable = true;
                     }
@@ -141,7 +141,7 @@ namespace NewWorkTracking.ViewModels
                 }
                 else
                 {
-                    OutputCantConnection();
+                    OutputCantConnection($@"Подключение отсутствует. Проверьте сетевое подключение и адрес сервера. Повторить попытку подключения или изменить сервер? Текущий сервер: ""{ConnectionClass.connectionPath.Server}""");
                 }
             });
         }
@@ -162,15 +162,24 @@ namespace NewWorkTracking.ViewModels
             }
         }
 
-        private void StartApp()
+        private async Task StartApp()
         {
-            if (StartConnection().Result)
+            if (await StartConnection())
             {
-                StartCheckAccess();
+                try
+                {
+                    StartCheckAccess();
+
+                    StartProgram();
+                }
+                catch (Exception e)
+                {
+                    OutputCantConnection(e.Message);
+                }
             }
             else
             {
-                OutputCantConnection();
+                OutputCantConnection($@"Подключение отсутствует. Проверьте сетевое подключение и адрес сервера. Повторить попытку подключения или изменить сервер? Текущий сервер: ""{ConnectionClass.connectionPath.Server}""");
             }
         }
 
@@ -178,10 +187,17 @@ namespace NewWorkTracking.ViewModels
         {
             Status = "Подключение установлено.";
 
-            ConnectionClass.hubConnection.InvokeAsync("RunCheckAccess", UserPrincipal.Current.DisplayName);
+            var userName = UserPrincipal.Current.DisplayName;
 
-            ConnectionClass.hubConnection.On<bool>("AccessDenide", (access) => Status = "Доступ запрещен. Обратитесь к руководителю или в отдел технической поддержки");
+            ConnectionClass.hubConnection.InvokeAsync("RunCheckAccess", userName);
 
+            ConnectionClass.hubConnection.On<bool>("AccessDenide", (access) => OutputCantConnection("Доступ запрещен. Обратитесь к руководителю или в отдел технической поддержки"));
+
+            return;
+        }
+
+        private void StartProgram()
+        {
             Status = "Получение данных.";
 
             ConnectionClass.hubConnection.On<MainObject>("GiveAll", (mainObject) =>
@@ -194,11 +210,11 @@ namespace NewWorkTracking.ViewModels
             });
         }
 
-        private void OutputCantConnection()
+        private void OutputCantConnection(string outMessage)
         {
             if (File.Exists(@"Resources/serverInfo.json"))
             {
-                Status = $@"Подключение отсутствует. Проверьте сетевое подключение и адрес сервера. Повторить попытку подключения или изменить сервер? Текущий сервер: ""{ConnectionClass.connectionPath.Server}""";
+                Status = outMessage;
 
                 ButtonsVis = Visibility.Visible;
             }
@@ -215,16 +231,16 @@ namespace NewWorkTracking.ViewModels
             }
         }
 
-        private void StartCheckUpdate()
+        private async void StartCheckUpdate()
         {
             if (!getNewVersionApi.CheckUpdate(Convert.ToInt32(FileVersionInfo.GetVersionInfo($@"{Directory.GetCurrentDirectory()}/Work_Tracking.exe").FileVersion.Replace(".", ""))))
-                StartApp();
+                await StartApp();
             else
             {
                 if (Application.Current.Dispatcher.Invoke(() => Message.Show("Внимание", "Обноружено обновление. Установить?", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
                     StartUpdate();
                 else
-                    StartApp();
+                    await StartApp();
             }
         }
 
